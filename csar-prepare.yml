@@ -1,0 +1,83 @@
+---
+- hosts: localhost
+  gather_facts: no
+  tasks:
+
+  - name: Read configuration file
+    include_vars: config/config.yml
+
+  ###### Wypakowanie wszytkich chartów do katalogu helm ##################
+  
+  - name: Find all charts names
+    find:
+      paths: charts/
+    register: files_matched
+
+  - name: Prepare charts list
+    set_fact:
+      file_list: "{{ file_list | default([]) | union([item.path]) }}"
+    with_items: "{{ files_matched.files }}"
+
+  - name: Create a helm  directory if it does not exist
+    file:
+      path: helm
+      state: directory
+      mode: '0755'
+
+  - name: Unarchive helm packages
+    shell: tar xvzf "{{item}}" -C helm
+    with_items: "{{ file_list }}"
+
+  ########################################################################
+
+  - name: Create a csar directory if it does not exist
+    file:
+      path: csar
+      state: directory
+      mode: '0755'
+
+  - name: Get list of charts in helm directory
+    command: ls  helm/
+    register: list
+
+  - name: Archive helm and add to csar directory
+    shell: tar cvzf csar/{{item}}_cloudtech_k8s_charts.tgz helm/{{item}}
+    with_items: "{{list.stdout_lines}}"
+
+  ###### Generate dummy heat for each cnf ################################
+
+  - name: Create a heat directory if it does not exist
+    file:
+      path: heat
+      state: directory
+      mode: '0755'
+
+  - name: Generate YAML files
+    copy:
+      src: "config/dummy/dummy.yaml"
+      dest: "heat/{{item}}.yaml"
+    with_items: "{{list.stdout_lines}}"
+
+  - name: Generate ENV files
+    copy:
+      src: "config/dummy/dummy.env"
+      dest: "heat/{{item}}.env"
+    with_items: "{{list.stdout_lines}}"
+
+  ################### Generate MANIFEST.json ##############################
+  
+  - name: Generate MANIFEST.json
+    shell: sh config/manifest_generator.sh "{{service_name}}" "{{service_description}}" {{service_name}}_CNF "{{list.stdout}}" > heat/MANIFEST.json
+  
+  ###### Copy heat content to csar directory ##############################
+
+  - name: Move files from heat/ directory  to csar/
+    shell: mv heat/* csar/
+
+  ###### ZIP ##############################################################
+  - name: make .zip file 
+    shell: cd csar/ && zip -r WEF_CNF.zip .
+
+  #########################################################################
+  - name: Copy zipped file to root directory
+    shell: cp csar/WEF_CNF.zip .
