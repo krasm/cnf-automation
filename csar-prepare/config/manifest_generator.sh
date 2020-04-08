@@ -1,17 +1,21 @@
 #!/bin/bash
 service_name="$1"
 service_description="$2"
-service_package_name="$3"
-CNFs="$4"
+CNFs="$3"
 
-data_content=$(jo -p file=$service_package_name.zip type=CONTROLLER_BLUEPRINT_ARCHIVE)
+data_content=""
 
 for CNF in $CNFs
 do
   env_name="$CNF.env"
   yaml_name="$CNF.yaml"
   output=$(jo -p file=$yaml_name type=HEAT -B isBase=true data[]=$(jo file=$env_name type=HEAT_ENV))
+  if [ -z "$data_content" ]
+  then
+    data_content="$output"
+  else
   data_content="$data_content,$output"
+  fi
   tgz_name="${CNF}_cloudtech_k8s_charts.tgz"
   output=$(jo -p file=$tgz_name type=CLOUD_TECHNOLOGY_SPECIFIC_ARTIFACTS)
   data_content="$data_content,$output"

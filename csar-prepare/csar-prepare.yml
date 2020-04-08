@@ -67,7 +67,7 @@
   ################### Generate MANIFEST.json ##############################
   
   - name: Generate MANIFEST.json
-    shell: sh config/manifest_generator.sh "{{service_name}}" "{{service_description}}" {{service_name}}_CNF "{{list.stdout}}" > heat/MANIFEST.json
+    shell: sh config/manifest_generator.sh "{{service_name}}" "{{service_description}}" "{{list.stdout}}" > heat/MANIFEST.json
   
   ###### Copy heat content to csar directory ##############################
 
@@ -76,8 +76,8 @@
 
   ###### ZIP ##############################################################
   - name: make .zip file 
-    shell: cd csar/ && zip -r WEF_CNF.zip .
+    shell: cd csar/ && zip -r "{{service_name}}"_CNF.zip .
 
   #########################################################################
   - name: Copy zipped file to root directory
-    shell: cp csar/WEF_CNF.zip .
+    shell: cp csar/{{service_name}}_CNF.zip .
