@@ -67,7 +67,7 @@
   ################### Generate MANIFEST.json ##############################
   
   - name: Generate MANIFEST.json
-    shell: sh config/manifest_generator.sh "{{service_name}}" "{{service_description}}" "{{list.stdout}}" > heat/MANIFEST.json
+    shell: sh config/manifest_generator.sh "{{service_name}}" "{{service_description}}" "{{list.stdout}}" "{{base_chart}}" > heat/MANIFEST.json
   
   ###### Copy heat content to csar directory ##############################
 
