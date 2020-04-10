@@ -53,20 +53,20 @@
       mode: '0755'
 
   - name: Generate YAML files
-    shell: sh config/yaml_generator.sh "{{list.stdout}}" "{{base_chart}}"
+    shell: cd config/ && ./yaml_generator.sh "{{list.stdout}}" "{{base_chart}}"
 
   - name: Generate ENV files
-    shell: sh config/env_generator.sh "{{list.stdout}}"
+    shell: cd config/ && ./env_generator.sh "{{list.stdout}}"
 
   ################### Generate MANIFEST.json ##############################
   
   - name: Generate MANIFEST.json
-    shell: sh config/manifest_generator.sh "{{service_name}}" "{{service_description}}" "{{list.stdout}}" "{{base_chart}}" > heat/MANIFEST.json
+    shell: cd config/ && ./manifest_generator.sh "{{service_name}}" "{{service_description}}" "{{list.stdout}}" "{{base_chart}}" > ../heat/MANIFEST.json
   
   ###### Copy heat content to csar directory ##############################
 
-  - name: Move files from heat/ directory  to csar/
-    shell: mv heat/* csar/
+  - name: Copy files from heat/ directory  to csar/
+    shell: cp heat/* csar/
 
   ###### ZIP ##############################################################
   - name: make .zip file 
