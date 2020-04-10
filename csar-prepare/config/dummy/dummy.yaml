@@ -33,10 +33,6 @@ description: Dummy base heat template for vFW usecase
 ##############
 
 parameters:
-  pub_key:
-    type: string
-    label: Public key
-    description: Public key to be installed on the compute instance
   vnf_name:
     type: string
     description: VNF_NAME
@@ -59,8 +55,6 @@ resources:
   dummy:
     type: OS::Heat::None
     properties:
-      pub_key:
-        get_param: pub_key
       vnf_name:
         get_param: vnf_name
       vnf_id:
@@ -68,7 +62,6 @@ resources:
       vf_module_id:
         get_param: vf_module_id
 
-  #SDC won't allow too dummy resource as it has to find 'topology_template' TOSCA equivalent in heat templates
   dummy_base:
     type: OS::Nova::Server
     properties:

@@ -1,4 +1,4 @@
 ---
 service_name: "PUT SERVICE NAME HERE"
 service_description: "PUT SERVICE DESCRIPTION HERE" 
-base_chart: spgw-c-forward-path
+base_chart: "PUT BASE CHART NAME HERE"

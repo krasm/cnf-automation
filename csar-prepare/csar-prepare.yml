@@ -53,16 +53,10 @@
       mode: '0755'
 
   - name: Generate YAML files
-    copy:
-      src: "config/dummy/dummy.yaml"
-      dest: "heat/{{item}}.yaml"
-    with_items: "{{list.stdout_lines}}"
+    shell: sh config/yaml_generator.sh "{{list.stdout}}" "{{base_chart}}"
 
   - name: Generate ENV files
-    copy:
-      src: "config/dummy/dummy.env"
-      dest: "heat/{{item}}.env"
-    with_items: "{{list.stdout_lines}}"
+    shell: sh config/env_generator.sh "{{list.stdout}}"
 
   ################### Generate MANIFEST.json ##############################
   
