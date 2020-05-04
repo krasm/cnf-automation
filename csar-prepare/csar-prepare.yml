@@ -2,6 +2,17 @@
 - hosts: localhost
   gather_facts: no
   tasks:
+  
+  - name: install packages
+    shell: snap install {{item}}
+    with_items:
+      - yq
+      - jo
+    become: yes
+
+  - name: install zip
+    shell: apt install zip
+    become: yes
 
   - name: Read configuration file
     include_vars: config/config.yml
