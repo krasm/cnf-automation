@@ -52,7 +52,7 @@
     register: list
 
   - name: Archive helm and add to csar directory
-    shell: tar cvzf csar/{{item}}_cloudtech_k8s_charts.tgz helm/{{item}}
+    shell: cd helm && tar cvzf ../csar/{{item}}_cloudtech_k8s_charts.tgz {{item}}
     with_items: "{{list.stdout_lines}}"
 
   ###### Generate dummy heat for each cnf ################################
