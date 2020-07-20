@@ -1,0 +1,4 @@
+openstacksdk
+simplejson
+oyaml
+

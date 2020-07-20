@@ -1,0 +1,14 @@
+- name: Configure OpenStack CloudOwner
+  command: yq w -i onap_tests/onap-conf/onap-testing.yaml openstack.cloud_owner {{openstack.cloud_owner}}
+
+- name: Configure OpenStack Region ID
+  command: yq w -i onap_tests/onap-conf/onap-testing.yaml openstack.region_id {{openstack.region_id}}
+
+- name: Configure OpenStack Tenant Name
+  command: yq w -i onap_tests/onap-conf/onap-testing.yaml openstack.tenant_name {{openstack.tenant_name}}
+
+- name: Configure OpenStack Tenant ID
+  command: yq w -i onap_tests/onap-conf/onap-testing.yaml openstack.tenant_id {{openstack.tenant_id}}
+
+- name: Configure OpenStack Check
+  command: yq w -i onap_tests/onap-conf/onap-testing.yaml openstack.check {{openstack.check}}

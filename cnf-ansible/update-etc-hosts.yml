@@ -1,0 +1,16 @@
+- name: Add URLs to etc/hosts
+  lineinfile:
+    state: present
+    regexp: \w+(?=\s+{{item}})
+    dest: /etc/hosts
+    line: '0.0.0.0 {{item}}'
+  with_items: "{{etc_hosts.urls}}"
+  become: true
+
+- name: Edit etc/hosts
+  replace:
+    dest: /etc/hosts
+    regexp: '[\w.]+(?=\s+{{item}})'
+    replace: "{{etc_hosts.address}}"
+  with_items: "{{etc_hosts.urls}}"
+  become: true

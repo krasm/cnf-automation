@@ -1,0 +1,10 @@
+- name: Create k8s-multicloud-post.json
+  copy:
+    dest: tmp/k8s-multicloud-post.json
+    content: |
+      {
+        "cloud-owner": "{{k8s.cloud_owner}}",
+        "cloud-region": "{{k8s.region_id}}",
+        "other-connectivity-list": {
+            }
+      }

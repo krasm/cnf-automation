@@ -1,0 +1,27 @@
+- name: Update packages
+  apt:
+    update_cache: yes
+    upgrade: dist
+  become: true
+
+- name: Install pip
+  apt:
+    name: python3-pip
+  become: true
+
+- name: Upgrade pip
+  pip:
+    name: pip
+    state: latest
+    executable: pip3
+  become: true
+
+- name: Install packages
+  pip:
+    requirements: "/home/ubuntu/CNF-ansible/requirements.txt"
+    extra_args: --user
+    executable: pip3
+
+- name: Install YQ tool (for editing YAML)
+  command: snap install yq
+  become: true

@@ -1,0 +1,51 @@
+- name: Check if Cloud Region exisits
+  uri:
+    url: https://{{ONAP_k8s_IP}}:30233/aai/v16/cloud-infrastructure/cloud-regions/cloud-region/{{k8s.cloud_owner}}/{{k8s.region_id}}
+    url_username: "{{ AAI_user }}"
+    url_password: "{{ AAI_pass }}"
+    force_basic_auth: yes
+    headers:
+      Accept: "application/json"
+      Content-Type: "application/json"
+      X-FromAppId: "Ansible"
+      X-TransactionId: "get_aai_subscr"
+    method: GET
+    status_code: 200, 404
+    return_content: yes
+    validate_certs: False
+  register: checkRegion
+
+- name: Prepare create-region.json
+  copy:
+    dest: tmp/create-region.json
+    content: |
+      {
+          "cloud-owner": "{{k8s.cloud_owner}}",
+          "cloud-region-id": "{{k8s.region_id}}",
+          "cloud-type": "{{k8s.type}}",
+          "owner-defined-type": "t1",
+          "cloud-region-version": "1.0",
+          "complex-name": "{{complex_id}}",
+          "cloud-zone": "CloudZone",
+          "sriov-automation": false
+      }
+  when: checkRegion.status == 404
+
+- name: Create Region
+  uri:
+    url: https://{{ONAP_k8s_IP}}:30233/aai/v16/cloud-infrastructure/cloud-regions/cloud-region/{{k8s.cloud_owner}}/{{k8s.region_id}}
+    url_username: "{{ AAI_user }}"
+    url_password: "{{ AAI_pass }}"
+    force_basic_auth: yes
+    headers:
+      Accept: "application/json"
+      Content-Type: "application/json"
+      X-FromAppId: "Ansible"
+      X-TransactionId: "get_aai_subscr"
+    method: PUT
+    status_code: 201
+    return_content: yes
+    validate_certs: False
+    body_format: json
+    body: "{{ lookup('file','tmp/create-region.json') }}"
+  when: checkRegion.status == 404

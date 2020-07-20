@@ -1,0 +1,36 @@
+- name: Check if Availability Zone exisits
+  uri:
+    url: https://{{ONAP_k8s_IP}}:30233/aai/v16/cloud-infrastructure/cloud-regions/cloud-region/{{k8s.cloud_owner}}/{{k8s.region_id}}/availability-zones/availability-zone/{{k8s.availability_zone}}
+    url_username: "{{ AAI_user }}"
+    url_password: "{{ AAI_pass }}"
+    force_basic_auth: yes
+    headers:
+      Accept: "application/json"
+      Content-Type: "application/json"
+      X-FromAppId: "Ansible"
+      X-TransactionId: "get_aai_subscr"
+    method: GET
+    status_code: 200, 404
+    return_content: yes
+    validate_certs: False
+  register: checkAvailabilityZone
+
+- name: Create Availability Zone
+  uri:
+    url: https://{{ONAP_k8s_IP}}:30233/aai/v16/cloud-infrastructure/cloud-regions/cloud-region/{{k8s.cloud_owner}}/{{k8s.region_id}}/availability-zones/availability-zone/{{k8s.availability_zone}}
+    url_username: "{{ AAI_user }}"
+    url_password: "{{ AAI_pass }}"
+    force_basic_auth: yes
+    headers:
+      Accept: "application/json"
+      Content-Type: "application/json"
+      X-FromAppId: "Ansible"
+      X-TransactionId: "get_aai_subscr"
+    method: PUT
+    status_code: 201
+    return_content: yes
+    validate_certs: False
+    body_format: json
+    body: >
+      {"availability-zone-name": "{{k8s.availability_zone}}","hypervisor-type": "{{k8s.type}}"}
+  when: checkAvailabilityZone.status == 404

@@ -1,0 +1,12 @@
+- name: Trigering registration in Multicloud
+  uri:
+    url: https://{{ONAP_k8s_IP}}:30283/api/multicloud-titaniumcloud/v1/{{k8s.cloud_owner}}/{{k8s.region_id}}/registry
+    method: POST
+    status_code: 200, 201, 202
+    validate_certs: False
+    headers: 
+      Content-Type: "application/x-www-form-urlencoded"
+
+- pause:
+    prompt: Pausing for 5 seconds... (we need to wait for new resource version)
+    seconds: 5

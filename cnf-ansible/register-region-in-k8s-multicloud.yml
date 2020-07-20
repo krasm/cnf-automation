@@ -1,0 +1,33 @@
+- name: Check if provided cloudregion is free?
+  uri:
+    url: https://{{ONAP_k8s_IP}}:30283/api/multicloud-k8s/v1/v1/connectivity-info/{{k8s.region_id}}
+    method: GET
+    status_code: 200, 500
+    validate_certs: False
+  register: result
+
+- debug: 
+     msg: Cloud region {{k8s.region_id}} exists. Going to delete and recreate it.
+  when: result.status == 200
+
+- name: Delete {{k8s.region_id}}
+  uri:
+    url: https://{{ONAP_k8s_IP}}:30283/api/multicloud-k8s/v1/v1/connectivity-info/{{k8s.region_id}}
+    method: DELETE
+    validate_certs: False
+    status_code: 204
+  when: result.status == 200
+
+- debug: 
+    msg: Cloud region {{k8s.region_id}} does not exist. Going to create it.
+  when: result.status == 500
+    
+- name: Register Cloud Region into Multicloud plugin
+  command: curl -k -i -F "metadata=<tmp/k8s-multicloud-post.json;type=application/json" -F file=@{{kubeconfig}} -X POST https://{{ONAP_k8s_IP}}:30283/api/multicloud-k8s/v1/v1/connectivity-info
+
+- name: Check if provided cloudregion was really created?
+  uri:
+    url: https://{{ONAP_k8s_IP}}:30283/api/multicloud-k8s/v1/v1/connectivity-info/{{k8s.region_id}}
+    method: GET
+    status_code: 200
+    validate_certs: False

@@ -1,0 +1,36 @@
+- name: Check connectivity-info exists for region
+  uri:
+    url: https://{{ONAP_k8s_IP}}:30283/api/multicloud-k8s/v1/v1/connectivity-info/{{k8s.region_id}}
+    method: GET
+    status_code: 200, 500
+    validate_certs: False
+  register: result
+
+- name: Delete {{k8s.region_id}} #Usunięcie connectivity-info, jeśli juz istnieje, abu móc zakyualizowac kubeconfig
+  uri:
+    url: https://{{ONAP_k8s_IP}}:30283/api/multicloud-k8s/v1/v1/connectivity-info/{{k8s.region_id}}
+    method: DELETE
+    validate_certs: False
+    status_code: 204
+  when: result.status == 200
+
+- name: Create k8s-multicloud-post.json
+  copy:
+    dest: tmp/k8s-multicloud-post.json
+    content: |
+      {
+        "cloud-owner": "{{k8s.cloud_owner}}",
+        "cloud-region": "{{k8s.region_id}}",
+        "other-connectivity-list": {
+            }
+      }
+
+- name: Register Cloud Region into Multicloud plugin
+  command: curl -k -i -F "metadata=<tmp/k8s-multicloud-post.json;type=application/json" -F file=@{{kubeconfig}} -X POST https://{{ONAP_k8s_IP}}:30283/api/multicloud-k8s/v1/v1/connectivity-info
+
+- name: Check if provided cloudregion was successfully created?
+  uri:
+    url: https://{{ONAP_k8s_IP}}:30283/api/multicloud-k8s/v1/v1/connectivity-info/{{k8s.region_id}}
+    method: GET
+    status_code: 200
+    validate_certs: False

@@ -1,0 +1,46 @@
+- name: Prepare put-cloud-region-aai.json
+  copy:
+    dest: tmp/put-cloud-region-aai.json
+    content: |    
+      {
+      "cloud-owner": "{{k8s.cloud_owner}}",
+      "cloud-region-id": "{{k8s.region_id}}",
+      "cloud-type": "k8s",
+      "owner-defined-type": "t1",
+      "cloud-region-version": "1.0",
+      "complex-name": "clli1",
+      "cloud-zone": "CloudZone",
+      "sriov-automation": false,
+      "cloud-extra-info": "{\"openstack-region-id\":\"{{k8s.region_id}}\"}",
+      "esr-system-info-list": {
+      "esr-system-info":[
+      {
+      "esr-system-info-id": "1a7573c4-cdb6-4746-b690-b72a785e3de9",
+      "service-url": "{{openstack.url}}:5000/v3",
+      "user-name": "{{openstack.user_name}}",
+      "password": "{{openstack.password}}",
+      "system-type": "VIM",
+      "ssl-insecure": true,
+      "cloud-domain": "Default",
+      "default-tenant": "{{openstack.tenant_name}}",
+      "tenant-id": "{{openstack.tenant_id}}",
+      "system-status": "active"
+      }
+      ]
+      }
+      }
+
+- name: Prepare put-complex-info.json
+  copy:
+    dest: tmp/put-complex-info.json
+    content: |
+      {
+      "related-to": "complex",
+      "related-link": "/aai/v13/cloud-infrastructure/complexes/complex/clli1",
+      "relationship-data": [
+      {
+      "relationship-key": "complex.physical-location-id",
+      "relationship-value": "clli1"
+      }
+      ]
+      }

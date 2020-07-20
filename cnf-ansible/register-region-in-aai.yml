@@ -1,0 +1,129 @@
+- name: Get Regions from AAI
+  uri:
+    url: https://{{ONAP_k8s_IP}}:30233/aai/v14/cloud-infrastructure/cloud-regions
+    url_username: "{{ AAI_user }}"
+    url_password: "{{ AAI_pass }}"
+    force_basic_auth: yes
+    headers: 
+      X-FromAppId: "AAI"
+      X-TransactionId: "get_aai_subscr"
+      Accept: "application/json"
+      Content-Type: "application/json"
+    method: GET
+    return_content: yes
+    validate_certs: False
+    body_format: json
+  register: aai_regions
+
+- name: Check if K8S Region exisits 
+  uri:
+    url: https://{{ONAP_k8s_IP}}:30233/aai/v14/cloud-infrastructure/cloud-regions/cloud-region/{{k8s.cloud_owner}}/{{k8s.region_id}}
+    url_username: "{{ AAI_user }}"
+    url_password: "{{ AAI_pass }}"
+    force_basic_auth: yes
+    headers: 
+      X-FromAppId: "AAI"
+      X-TransactionId: "get_aai_subscr"
+      Accept: "application/json"
+      Content-Type: "application/json"
+    method: GET
+    status_code: 200, 404
+    return_content: yes
+    validate_certs: False
+  register: resultregi
+
+- debug: 
+    msg: Cloud registration {{k8s.region_id}} exists. Skipping ...
+  when: resultregi.status == 200
+
+- debug: 
+    msg: Cloud registration {{k8s.region_id}} does not exist. It will be created ...
+  when: resultregi.status == 404
+
+- name: Check if service type exists 
+  uri:
+    url: https://{{ONAP_k8s_IP}}:30233/aai/v13/service-design-and-creation/services/service/{{service_type}}
+    url_username: "{{ AAI_user }}"
+    url_password: "{{ AAI_pass }}"
+    force_basic_auth: yes
+    headers: 
+      X-FromAppId: "AAI"
+      X-TransactionId: "get_aai_subscr"
+      Accept: "application/json"
+      Content-Type: "application/json"
+    method: GET
+    status_code: 200, 404
+    return_content: yes
+    validate_certs: False
+  register: resultservicetype
+
+- debug: 
+    msg: Service type {{service_type}} exists. Skipping ...
+  when: resultservicetype.status == 200
+
+- debug: 
+    msg: Service type {{service_type}} does not exist. It will be created.
+  when: resultservicetype.status == 404
+
+- name: Check if service subscription exists for customer 
+  uri:
+    url: https://{{ONAP_k8s_IP}}:30233/aai/v16/business/customers/customer/{{customer}}/service-subscriptions/service-subscription/{{service_type}}
+    url_username: "{{ AAI_user }}"
+    url_password: "{{ AAI_pass }}"
+    force_basic_auth: yes
+    headers: 
+      X-FromAppId: "AAI"
+      X-TransactionId: "get_aai_subscr"
+      Accept: "application/json"
+      Content-Type: "application/json"
+    method: GET
+    status_code: 200, 404
+    return_content: yes
+    validate_certs: False
+  register: resultservicesub
+
+- debug: 
+    msg: Service subscription {{service_type}} exists for customer {{customer}}. Skipping ...
+  when: resultservicesub.status == 200
+
+- debug: 
+    msg: Service subscription {{service_type}} does not exist for customer {{customer}}. It will be created.
+  when: resultservicesub.status == 404
+
+- name: Prepare payloads for AAI requests
+  include_tasks: prepare-aai-request-payload.yml
+  
+- name: Add region to AAI
+  uri:
+    url: https://{{ONAP_k8s_IP}}:30233/aai/v14/cloud-infrastructure/cloud-regions/cloud-region/{{k8s.cloud_owner}}/{{k8s.region_id}}
+    url_username: "{{ AAI_user }}"
+    url_password: "{{ AAI_pass }}"
+    force_basic_auth: yes
+    headers: 
+      X-FromAppId: "AAI"
+      X-TransactionId: "get_aai_subscr"
+      Accept: "application/json"
+      Content-Type: "application/json"
+    method: PUT
+    status_code: 200, 201
+    validate_certs: False
+    body_format: json
+    body: "{{ lookup('file','tmp/put-cloud-region-aai.json') }}"
+  when: resultregi.status == 404
+   
+- name: Put complex
+  uri:
+    url: https://{{ONAP_k8s_IP}}:30233/aai/v14/cloud-infrastructure/cloud-regions/cloud-region/{{k8s.cloud_owner}}/{{k8s.region_id}}/relationship-list/relationship
+    url_username: "{{ AAI_user }}"
+    url_password: "{{ AAI_pass }}"
+    force_basic_auth: yes
+    headers: 
+      X-FromAppId: "AAI"
+      X-TransactionId: "get_aai_subscr"
+      Accept: "application/json"
+      Content-Type: "application/json"
+    method: PUT
+    status_code: 200, 201
+    validate_certs: False
+    body_format: json
+    body: "{{ lookup('file','tmp/put-complex-info.json') }}"

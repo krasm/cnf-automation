@@ -1,0 +1,35 @@
+#- name: Prepare required payloads for K8S Multicloud
+#  include_tasks: prepare-multicloud-plugin-request-payload.yml
+
+#- name: Register region in k8s Multicloud plugin
+#  include_tasks: register-region-in-k8s-multicloud.yml
+
+#- name: Register region in AAI
+#  include_tasks: register-region-in-aai.yml
+
+#- name: Register region in Multicloud
+#  include_tasks: register-region-in-multicloud.yml
+
+- name: Create Complex
+  include_tasks: cloud-registration/create-complex.yml
+
+- name: Create Region
+  include_tasks: cloud-registration/create-region.yml
+
+- name: Associate Region with Complex
+  include_tasks: cloud-registration/associate-region-with-complex.yml
+
+- name: Create Service
+  include_tasks: cloud-registration/create-service.yml
+
+- name: Create Service Subscription
+  include_tasks: cloud-registration/create-service-subscription.yml
+
+- name: Add tenant to region
+  include_tasks: cloud-registration/add-tenant-to-region.yml
+
+- name: Create availability zone
+  include_tasks: cloud-registration/create-availability-zone.yml
+
+- name: Register to multicloud
+  include_tasks: cloud-registration/register-to-multicloud.yml

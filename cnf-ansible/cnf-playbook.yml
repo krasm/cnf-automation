@@ -1,0 +1,35 @@
+---
+- hosts: localhost
+  gather_facts: no
+  tasks:
+  - name: Read configuration file
+    include_vars: config/config.yml
+
+  - name: Install required packages
+    include_tasks: install-packages.yml
+
+  - name: Update OpenStack parameters (onap-testing.yaml in onap_tests library)
+    include_tasks: update-openstack-parameters.yml
+
+  - name: Update etc/hosts
+    include_tasks: update-etc-hosts.yml
+
+  - name: Configure region in ONAP
+    include_tasks: configure-region.yml
+
+
+###########################################
+####### Configure Region in MariaDB #######
+- hosts: RANCHER
+  remote_user: root
+  gather_facts: no
+  vars:
+    ansible_ssh_private_key_file: "config/rancher_key"
+    template: !unsafe '{{.data.password}}'  
+  tasks:
+  
+  - name: Read configuration file
+    include_vars: config/config.yml
+
+  - name: Add region to SO Database
+    include_tasks: cloud-registration/add-region-to-SO-db.yml
