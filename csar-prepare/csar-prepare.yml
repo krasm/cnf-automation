@@ -84,5 +84,5 @@
     shell: cd csar/ && zip -r "{{service_name}}"_CNF.zip .
 
   #########################################################################
-  - name: Copy zipped file to root directory
-    shell: cp csar/{{service_name}}_CNF.zip .
+  - name: Move zipped file to root directory
+    shell: mv csar/{{service_name}}_CNF.zip .
