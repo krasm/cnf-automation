@@ -13,17 +13,8 @@ k8s:
   cloud_version: 2.5
   tenant: k8s_tenant_1
   availability_zone: k8s_availability_zone_1
-openstack:
-  cloud_owner: CloudOwner
-  region_id: RegionOne
-  tenant_name: Integration-SB-00
-  tenant_id: 41d6d38489bd40b09ea8a6b6b852dcbd
-  check: False
-  url: http://10.12.25.2
-  user_name: michal_chabiera
-  password: password
 etc_hosts:
-  address: 10.12.5.100
+  address: 10.12.5.102
   urls:
     - aai.api.sparky.simpledemo.onap.org
     - cli.api.simpledemo.onap.org
@@ -42,7 +33,7 @@ etc_hosts:
     - so.api.simpledemo.onap.org
     - vid.api.simpledemo.onap.org
 kubeconfig: config/kubeconfig
-ONAP_k8s_IP: 10.12.5.100
-RANCHER_IP: 10.12.5.150
+ONAP_k8s_IP: 10.12.5.102
+RANCHER_IP: 10.12.5.64
 AAI_user: AAI
 AAI_pass: AAI
