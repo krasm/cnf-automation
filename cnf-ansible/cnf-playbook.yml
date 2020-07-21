@@ -8,9 +8,6 @@
   - name: Install required packages
     include_tasks: install-packages.yml
 
-  - name: Update OpenStack parameters (onap-testing.yaml in onap_tests library)
-    include_tasks: update-openstack-parameters.yml
-
   - name: Update etc/hosts
     include_tasks: update-etc-hosts.yml
 
