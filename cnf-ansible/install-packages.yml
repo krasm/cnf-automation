@@ -18,7 +18,7 @@
 
 - name: Install packages
   pip:
-    requirements: "/home/ubuntu/CNF-ansible/requirements.txt"
+    requirements: "{{playbook_dir}}/requirements.txt"
     extra_args: --user
     executable: pip3
 
