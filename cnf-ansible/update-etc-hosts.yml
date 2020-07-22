@@ -11,6 +11,6 @@
   replace:
     dest: /etc/hosts
     regexp: '[\w.]+(?=\s+{{item}})'
-    replace: "{{etc_hosts.address}}"
+    replace: "{{ONAP_k8s_IP}}"
   with_items: "{{etc_hosts.urls}}"
   become: true
