@@ -1,6 +1,6 @@
 - name: Check if Service subscription exisits
   uri:
-    url: https://{{ONAP_k8s_IP}}:30233/aai/v16/business/customers/customer/{{customer}}/service-subscriptions/service-subscription/{{service_type}}
+    url: https://{{ONAP_k8s_IP}}:30233/aai/v16/business/customers/customer/{{customer}}/service-subscriptions/service-subscription/{{service_name}}
     url_username: "{{ AAI_user }}"
     url_password: "{{ AAI_pass }}"
     force_basic_auth: yes
@@ -17,7 +17,7 @@
 
 - name: Create Service Subscription
   uri:
-    url: https://{{ONAP_k8s_IP}}:30233/aai/v16/business/customers/customer/{{customer}}/service-subscriptions/service-subscription/{{service_type}}
+    url: https://{{ONAP_k8s_IP}}:30233/aai/v16/business/customers/customer/{{customer}}/service-subscriptions/service-subscription/{{service_name}}
     url_username: "{{ AAI_user }}"
     url_password: "{{ AAI_pass }}"
     force_basic_auth: yes
@@ -32,5 +32,5 @@
     validate_certs: False
     body_format: json
     body: >
-      {"service-type": "{{service_type}}"}
+      {"service-type": "{{service_name}}"}
   when: checkServiceSubscription.status == 404

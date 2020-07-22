@@ -1,7 +1,7 @@
 ---
 vendor: Vendor-Michal
 customer: Demonstration
-service_type: wordpress
+service_name: wordpress
 complex_id: complexMC
 k8s:
   region_id: k8s_region_1

@@ -27,7 +27,7 @@
               {
                 "related-to": "service-subscription",
                 "relationship-label": "org.onap.relationships.inventory.Uses",
-                "related-link": "/aai/v16/business/customers/customer/{{customer}}/service-subscriptions/service-subscription/{{service_type}}",
+                "related-link": "/aai/v16/business/customers/customer/{{customer}}/service-subscriptions/service-subscription/{{service_name}}",
                 "relationship-data": [
                     {
                         "relationship-key": "customer.global-customer-id",
@@ -35,7 +35,7 @@
                     },
                     {
                         "relationship-key": "service-subscription.service-type",
-                        "relationship-value": "{{service_type}}"
+                        "relationship-value": "{{service_name}}"
                     }
                 ]
               }

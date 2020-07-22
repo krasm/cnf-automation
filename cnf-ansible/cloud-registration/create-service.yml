@@ -1,6 +1,6 @@
 - name: Check if Service exisits
   uri:
-    url: https://{{ONAP_k8s_IP}}:30233/aai/v16/service-design-and-creation/services/service/{{service_type}}
+    url: https://{{ONAP_k8s_IP}}:30233/aai/v16/service-design-and-creation/services/service/{{service_name}}
     url_username: "{{ AAI_user }}"
     url_password: "{{ AAI_pass }}"
     force_basic_auth: yes
@@ -20,14 +20,14 @@
     dest: tmp/create-service.json
     content: |
       {
-          "service-description": "{{service_type}}",
-          "service-id": "{{service_type}}"
+          "service-description": "{{service_name}}",
+          "service-id": "{{service_name}}"
       }
   when: checkService.status == 404
 
 - name: Create Service
   uri:
-    url: https://{{ONAP_k8s_IP}}:30233/aai/v16/service-design-and-creation/services/service/{{service_type}}
+    url: https://{{ONAP_k8s_IP}}:30233/aai/v16/service-design-and-creation/services/service/{{service_name}}
     url_username: "{{ AAI_user }}"
     url_password: "{{ AAI_pass }}"
     force_basic_auth: yes
