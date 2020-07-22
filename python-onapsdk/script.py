@@ -47,7 +47,7 @@ logger.addHandler(fh)
 
 # Create required A&AI resources
 VENDOR = sys.argv[1]
-VSPFILE = "vsp/" + sys.argv[6] + "_CNF.zip"
+VSPFILE = "../csar-prepare/" + sys.argv[6] + "_CNF.zip"
 VSPNAME = "VSP_" + sys.argv[6]
 VFNAME = "VF_" + sys.argv[6]
 SERVICENAME = "SERVICE_" + sys.argv[6]
