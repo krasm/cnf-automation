@@ -40,3 +40,14 @@
   - name: Execute script
     shell: cd && cd / && ./tmp/script-so-bpmn.sh
 
+####################################################
+############ Onboard & Instantiate CNF #############
+
+- hosts: localhost
+  gather_facts: no
+  tasks:
+  - name: Read configuration file
+    include_vars: config/config.yml
+
+  - name: Run onboarding and instantiation script
+    shell: python 3 ../python-onapsdk/script.py "{{vendor}}" "{{customer}}" "{{k8s.cloud_owner}}" "{{k8s.region_id}}" "{{k8s.tenant}}" "{{service_name}}"
