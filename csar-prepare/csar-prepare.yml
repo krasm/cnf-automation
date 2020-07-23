@@ -15,7 +15,7 @@
     become: yes
 
   - name: Read configuration file
-    include_vars: config/config.yml
+    include_vars: ../global-config.yml
 
   ###### Wypakowanie wszytkich chartów do katalogu helm ##################
   

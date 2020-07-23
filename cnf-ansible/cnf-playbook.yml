@@ -3,7 +3,7 @@
   gather_facts: no
   tasks:
   - name: Read configuration file
-    include_vars: config/config.yml
+    include_vars: ../global-config.yml
 
   - name: Install required packages
     include_tasks: install-packages.yml
@@ -26,7 +26,7 @@
   tasks:
   
   - name: Read configuration file
-    include_vars: config/config.yml
+    include_vars: ../global-config.yml
 
   - name: Add region to SO Database
     include_tasks: cloud-registration/add-region-to-SO-db.yml
@@ -47,7 +47,7 @@
   gather_facts: no
   tasks:
   - name: Read configuration file
-    include_vars: config/config.yml
+    include_vars: ../global-config.yml
 
   - name: Run onboarding and instantiation script
-    shell: python 3 ../python-onapsdk/script.py "{{vendor}}" "{{customer}}" "{{k8s.cloud_owner}}" "{{k8s.region_id}}" "{{k8s.tenant}}" "{{service_name}}"
+    shell: cd ../python-onapsdk && python3 script.py "{{vendor}}" "{{customer}}" "{{k8s.cloud_owner}}" "{{k8s.region_id}}" "{{k8s.tenant}}" "{{service_name}}"

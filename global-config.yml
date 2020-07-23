@@ -1,0 +1,39 @@
+---
+service_name: nginx-ingress
+service_description: Nginx service test
+base_chart: nginx-ingress
+vendor: Vendor-Michal
+customer: Demonstration
+k8s:
+  region_id: k8s_region_1
+  cloud_owner: k8sCloudOwner
+  type: k8s
+  orchestrator: multicloud
+  identity_service: DEFAULT_KEYSTONE
+  complex: complexMC
+  cloud_version: 2.5
+  tenant: k8s_tenant_1
+  availability_zone: k8s_availability_zone_1
+etc_hosts:
+  urls:
+    - aai.api.sparky.simpledemo.onap.org
+    - cli.api.simpledemo.onap.org
+    - msb.api.discovery.simpledemo.onap.org
+    - mr.api.simpledemo.onap.org
+    - nbi.api.simpledemo.onap.org
+    - policy.api.simpledemo.onap.org
+    - portal.api.simpledemo.onap.org
+    - portal-sdk.simpledemo.onap.org
+    - sdc.api.be.simpledemo.onap.org
+    - sdc.api.fe.simpledemo.onap.org
+    - sdc.api.simpledemo.onap.org
+    - sdc.dcae.plugin.simpledemo.onap.org
+    - sdc.workflow.plugin.simpledemo.onap.org
+    - sdnc.api.simpledemo.onap.org
+    - so.api.simpledemo.onap.org
+    - vid.api.simpledemo.onap.org
+kubeconfig: config/kubeconfig
+ONAP_k8s_IP: 10.12.5.102
+RANCHER_IP: 10.12.5.64
+AAI_user: AAI
+AAI_pass: AAI
