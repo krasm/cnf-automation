@@ -4,11 +4,11 @@
     content: |
       {
           "related-to": "complex",
-          "related-link": "/aai/v16/cloud-infrastructure/complexes/complex/{{complex_id}}",
+          "related-link": "/aai/v16/cloud-infrastructure/complexes/complex/{{k8s.complex}}",
           "relationship-data": [
             {
               "relationship-key": "complex.physical-location-id",
-              "relationship-value": "{{complex_id}}"
+              "relationship-value": "{{k8s.complex}}"
             }
           ]
       }

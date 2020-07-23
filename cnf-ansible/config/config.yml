@@ -2,7 +2,6 @@
 vendor: Vendor-Michal
 customer: Demonstration
 service_name: wordpress
-complex_id: complexMC
 k8s:
   region_id: k8s_region_1
   cloud_owner: k8sCloudOwner

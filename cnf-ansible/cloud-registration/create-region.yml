@@ -25,7 +25,7 @@
           "cloud-type": "{{k8s.type}}",
           "owner-defined-type": "t1",
           "cloud-region-version": "1.0",
-          "complex-name": "{{complex_id}}",
+          "complex-name": "{{k8s.complex}}",
           "cloud-zone": "CloudZone",
           "sriov-automation": false
       }
