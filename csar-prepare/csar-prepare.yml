@@ -2,6 +2,10 @@
 - hosts: localhost
   gather_facts: no
   tasks:
+
+  - name: update snap
+    shell: snap refresh
+    become: yes
   
   - name: install packages
     shell: snap install {{item}}
@@ -11,7 +15,7 @@
     become: yes
 
   - name: install zip
-    shell: apt install zip
+    shell: apt install zip -y
     become: yes
 
   - name: Read configuration file
