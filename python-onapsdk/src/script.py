@@ -7,15 +7,15 @@ import string
 import sys
 import time
 from uuid import uuid4
-from onapsdk.aai.aai_element import AaiElement
+#from onapsdk.aai.aai_element import AaiElement
 from onapsdk.aai.cloud_infrastructure import ( 
     CloudRegion,
     Complex,
     Tenant
 )
-from onapsdk.aai.service_design_and_creation import (
-    Service as AaiService
-)
+#from onapsdk.aai.service_design_and_creation import (
+#    Service as AaiService
+#)
 from onapsdk.aai.instances import (
     ServiceInstance,
     VnfInstance,
@@ -29,12 +29,12 @@ from onapsdk.so.instantiation import (
     VnfInstantiation,
     VnfParameter
 )
-from onapsdk.sdc import SDC
+#from onapsdk.sdc import SDC
 from onapsdk.vendor import Vendor
 from onapsdk.vsp import Vsp
 from onapsdk.vf import Vf
 from onapsdk.service import Service
-import onapsdk.constants as const
+#import onapsdk.constants as const
 import os
 from onapsdk.vid import LineOfBusiness, OwningEntity, Platform, Project
 
@@ -47,7 +47,7 @@ logger.addHandler(fh)
 
 # Create required A&AI resources
 VENDOR = sys.argv[1]
-VSPFILE = "../csar-prepare/" + sys.argv[6] + "_CNF.zip"
+VSPFILE = "../../csar-prepare/" + sys.argv[6] + "_CNF.zip"
 VSPNAME = "VSP_" + sys.argv[6]
 VFNAME = "VF_" + sys.argv[6]
 SERVICENAME = "SERVICE_" + sys.argv[6]
