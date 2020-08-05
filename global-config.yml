@@ -1,19 +1,19 @@
 ---
-service_name: nginx-ingress
-service_description: Nginx service test
-base_chart: nginx-ingress
-vendor: Vendor-Michal
-customer: Demonstration
+service_name: "PUT SERVICE NAME HERE"
+service_description: "PUT SERVICE DESCRIPTION HERE"
+base_chart: "PUT BASE CHART NAME HERE"
+vendor: "PUT VENDOR NAME HERE"
+customer: "PUT CUSTOMER NAME HERE"
 region_details:
-  region_id: k8s_region_1
-  cloud_owner: k8sCloudOwner
+  region_id: "PUT REGION ID HERE"
+  cloud_owner: "PUT CLOUD OWNER NAME HERE"
   type: k8s
   orchestrator: multicloud
   identity_service: DEFAULT_KEYSTONE
-  complex: complexMC
+  complex: "PUT COMPLEX NAME HERE"
   cloud_version: 2.5
-  tenant: k8s_tenant_1
-  availability_zone: k8s_availability_zone_1
+  tenant: "PUT TENANT NAME HERE"
+  availability_zone: "PUT AVAILABILITY ZONE NAME HERE"
 etc_hosts:
   urls:
     - aai.api.sparky.simpledemo.onap.org
@@ -33,7 +33,7 @@ etc_hosts:
     - so.api.simpledemo.onap.org
     - vid.api.simpledemo.onap.org
 kubeconfig: config/kubeconfig
-ONAP_k8s_IP: 10.12.5.167
-RANCHER_IP: 10.12.6.12
+ONAP_k8s_IP: "PUT ONE OF ONAP NODE IP ADDRESS HERE"
+RANCHER_IP: "PUT ONAP RANCHER/NFS IP ADDRESS HERE"
 AAI_user: AAI
 AAI_pass: AAI
