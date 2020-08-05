@@ -50,4 +50,4 @@
     include_vars: ../global-config.yml
 
   - name: Run onboarding and instantiation script
-    shell: cd ../python-onapsdk/src && pipenv install --python=python3.8 && pipenv run python script.py "{{vendor}}" "{{customer}}" "{{k8s.cloud_owner}}" "{{k8s.region_id}}" "{{k8s.tenant}}" "{{service_name}}"
+    shell: cd ../python-onapsdk/src && pipenv install --python=python3.8 && pipenv run python script.py "{{vendor}}" "{{customer}}" "{{region_details.cloud_owner}}" "{{region_details.region_id}}" "{{region_details.tenant}}" "{{service_name}}"

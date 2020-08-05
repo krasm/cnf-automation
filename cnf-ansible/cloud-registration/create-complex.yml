@@ -1,6 +1,6 @@
 - name: Check if Complex exisits
   uri:
-    url: https://{{ONAP_k8s_IP}}:30233/aai/v16/cloud-infrastructure/complexes/complex/{{k8s.complex}}
+    url: https://{{ONAP_k8s_IP}}:30233/aai/v16/cloud-infrastructure/complexes/complex/{{region_details.complex}}
     url_username: "{{ AAI_user }}"
     url_password: "{{ AAI_pass }}"
     force_basic_auth: yes
@@ -20,7 +20,7 @@
     dest: tmp/create-complex.json
     content: |
       {
-          "physical-location-id": "{{k8s.complex}}",
+          "physical-location-id": "{{region_details.complex}}",
           "physical-location-type": "office",
           "street1": "DummyStreet 1",
           "city": "DummyCity",
@@ -32,7 +32,7 @@
 
 - name: Create Complex
   uri:
-    url: https://{{ONAP_k8s_IP}}:30233/aai/v16/cloud-infrastructure/complexes/complex/{{k8s.complex}}
+    url: https://{{ONAP_k8s_IP}}:30233/aai/v16/cloud-infrastructure/complexes/complex/{{region_details.complex}}
     url_username: "{{ AAI_user }}"
     url_password: "{{ AAI_pass }}"
     force_basic_auth: yes

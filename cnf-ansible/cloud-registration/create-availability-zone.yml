@@ -1,6 +1,6 @@
 - name: Check if Availability Zone exisits
   uri:
-    url: https://{{ONAP_k8s_IP}}:30233/aai/v16/cloud-infrastructure/cloud-regions/cloud-region/{{k8s.cloud_owner}}/{{k8s.region_id}}/availability-zones/availability-zone/{{k8s.availability_zone}}
+    url: https://{{ONAP_k8s_IP}}:30233/aai/v16/cloud-infrastructure/cloud-regions/cloud-region/{{region_details.cloud_owner}}/{{region_details.region_id}}/availability-zones/availability-zone/{{region_details.availability_zone}}
     url_username: "{{ AAI_user }}"
     url_password: "{{ AAI_pass }}"
     force_basic_auth: yes
@@ -17,7 +17,7 @@
 
 - name: Create Availability Zone
   uri:
-    url: https://{{ONAP_k8s_IP}}:30233/aai/v16/cloud-infrastructure/cloud-regions/cloud-region/{{k8s.cloud_owner}}/{{k8s.region_id}}/availability-zones/availability-zone/{{k8s.availability_zone}}
+    url: https://{{ONAP_k8s_IP}}:30233/aai/v16/cloud-infrastructure/cloud-regions/cloud-region/{{region_details.cloud_owner}}/{{region_details.region_id}}/availability-zones/availability-zone/{{region_details.availability_zone}}
     url_username: "{{ AAI_user }}"
     url_password: "{{ AAI_pass }}"
     force_basic_auth: yes
@@ -32,5 +32,5 @@
     validate_certs: False
     body_format: json
     body: >
-      {"availability-zone-name": "{{k8s.availability_zone}}","hypervisor-type": "{{k8s.type}}"}
+      {"availability-zone-name": "{{region_details.availability_zone}}","hypervisor-type": "{{region_details.type}}"}
   when: checkAvailabilityZone.status == 404

@@ -4,18 +4,18 @@
     content: |
       {
           "related-to": "complex",
-          "related-link": "/aai/v16/cloud-infrastructure/complexes/complex/{{k8s.complex}}",
+          "related-link": "/aai/v16/cloud-infrastructure/complexes/complex/{{region_details.complex}}",
           "relationship-data": [
             {
               "relationship-key": "complex.physical-location-id",
-              "relationship-value": "{{k8s.complex}}"
+              "relationship-value": "{{region_details.complex}}"
             }
           ]
       }
 
 - name: Create association Region with Complex
   uri:
-    url: https://{{ONAP_k8s_IP}}:30233/aai/v16/cloud-infrastructure/cloud-regions/cloud-region/{{k8s.cloud_owner}}/{{k8s.region_id}}/relationship-list/relationship
+    url: https://{{ONAP_k8s_IP}}:30233/aai/v16/cloud-infrastructure/cloud-regions/cloud-region/{{region_details.cloud_owner}}/{{region_details.region_id}}/relationship-list/relationship
     url_username: "{{ AAI_user }}"
     url_password: "{{ AAI_pass }}"
     force_basic_auth: yes

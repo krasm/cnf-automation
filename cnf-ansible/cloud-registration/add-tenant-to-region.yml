@@ -1,6 +1,6 @@
 - name: Check if Tenant exisits
   uri:
-    url: https://{{ONAP_k8s_IP}}:30233/aai/v16/cloud-infrastructure/cloud-regions/cloud-region/{{k8s.cloud_owner}}/{{k8s.region_id}}/tenants/tenant/{{k8s.tenant}}
+    url: https://{{ONAP_k8s_IP}}:30233/aai/v16/cloud-infrastructure/cloud-regions/cloud-region/{{region_details.cloud_owner}}/{{region_details.region_id}}/tenants/tenant/{{region_details.tenant}}
     url_username: "{{ AAI_user }}"
     url_password: "{{ AAI_pass }}"
     force_basic_auth: yes
@@ -20,8 +20,8 @@
     dest: tmp/create-tenant.json
     content: |
       {
-          "tenant-id": "{{k8s.tenant}}",
-          "tenant-name": "{{k8s.tenant}}",
+          "tenant-id": "{{region_details.tenant}}",
+          "tenant-name": "{{region_details.tenant}}",
           "relationship-list": {
             "relationship": [
               {
@@ -46,7 +46,7 @@
 
 - name: Add Tenant to Region
   uri:
-    url: https://{{ONAP_k8s_IP}}:30233/aai/v16/cloud-infrastructure/cloud-regions/cloud-region/{{k8s.cloud_owner}}/{{k8s.region_id}}/tenants/tenant/{{k8s.tenant}}
+    url: https://{{ONAP_k8s_IP}}:30233/aai/v16/cloud-infrastructure/cloud-regions/cloud-region/{{region_details.cloud_owner}}/{{region_details.region_id}}/tenants/tenant/{{region_details.tenant}}
     url_username: "{{ AAI_user }}"
     url_password: "{{ AAI_pass }}"
     force_basic_auth: yes

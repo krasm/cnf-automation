@@ -13,6 +13,6 @@
     msg: "{{cloud_sites.stdout_lines}}"
 
 - name: Add new region to MadiaDB CLOUD_SITES table
-  shell: kubectl exec dev-mariadb-galera-0 -n onap -- bash -c "mysql -uroot -p{{secret.stdout}} catalogdb -e 'insert into cloud_sites(ID, REGION_ID, IDENTITY_SERVICE_ID, CLOUD_VERSION, CLLI, ORCHESTRATOR ) values (\"{{k8s.region_id}}\", \"{{k8s.region_id}}\", \"DEFAULT_KEYSTONE\", \"2.5\", \"{{k8s.complex}}\", \"multicloud\");'"
+  shell: kubectl exec dev-mariadb-galera-0 -n onap -- bash -c "mysql -uroot -p{{secret.stdout}} catalogdb -e 'insert into cloud_sites(ID, REGION_ID, IDENTITY_SERVICE_ID, CLOUD_VERSION, CLLI, ORCHESTRATOR ) values (\"{{region_details.region_id}}\", \"{{region_details.region_id}}\", \"DEFAULT_KEYSTONE\", \"2.5\", \"{{region_details.complex}}\", \"multicloud\");'"
   become: true
-  when: not (cloud_sites.stdout | regex_search(k8s.region_id))
+  when: not (cloud_sites.stdout | regex_search(region_details.region_id))

@@ -4,7 +4,7 @@ service_description: Nginx service test
 base_chart: nginx-ingress
 vendor: Vendor-Michal
 customer: Demonstration
-k8s:
+region_details:
   region_id: k8s_region_1
   cloud_owner: k8sCloudOwner
   type: k8s
@@ -33,7 +33,7 @@ etc_hosts:
     - so.api.simpledemo.onap.org
     - vid.api.simpledemo.onap.org
 kubeconfig: config/kubeconfig
-ONAP_k8s_IP: 10.12.5.102
-RANCHER_IP: 10.12.5.64
+ONAP_k8s_IP: 10.12.5.167
+RANCHER_IP: 10.12.6.12
 AAI_user: AAI
 AAI_pass: AAI
