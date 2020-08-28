@@ -5,6 +5,9 @@ CNFs="$3"
 base_chart="$4"
 data_content=""
 
+output=$(jo -p file=CBA.zip type=CONTROLLER_BLUEPRINT_ARCHIVE)
+data_content="$output"
+
 for CNF in $CNFs
 do
   env_name="${CNF}.env"

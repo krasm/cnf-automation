@@ -80,8 +80,13 @@
   
   ###### Copy heat content to csar directory ##############################
 
-  - name: Copy files from heat/ directory  to csar/
+  - name: Copy files from heat/ directory to csar/
     shell: cp heat/* csar/
+
+  ###### Copy CBA to csar directory ##############################
+
+  - name: Copy CBA to csar/
+    shell: cp cba/CBA.zip csar/
 
   ###### ZIP ##############################################################
   - name: make .zip file 
