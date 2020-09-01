@@ -19,7 +19,7 @@ do
     base="true"
   fi
 
-  output=$(jo -p file=$yaml_name type=HEAT -B isBase=$base data[]=$(jo file=$env_name type=HEAT_ENV))
+  output=$(jo -p file=$yaml_name type=HEAT -B isBase=$base data=[$(jo file=$env_name type=HEAT_ENV)])
 
   if [ -z "$data_content" ]
   then
