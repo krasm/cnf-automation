@@ -22,6 +22,9 @@
 - name: Create Service
   include_tasks: cloud-registration/create-service.yml
 
+- name: Create Customer
+  include_tasks: cloud-registration/create-customer.yml
+
 - name: Create Service Subscription
   include_tasks: cloud-registration/create-service-subscription.yml
 
