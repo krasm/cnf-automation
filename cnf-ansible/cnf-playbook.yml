@@ -18,7 +18,7 @@
 ###########################################
 ####### Configure Region in MariaDB #######
 - hosts: RANCHER
-  remote_user: root
+  remote_user: debian
   gather_facts: no
   vars:
     ansible_ssh_private_key_file: "config/rancher_key"
