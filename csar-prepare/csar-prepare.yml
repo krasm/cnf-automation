@@ -21,7 +21,15 @@
   - name: Read configuration file
     include_vars: ../global-config.yml
 
-  ###### Wypakowanie wszytkich chartów do katalogu helm ##################
+  - name: Remove helm, heat, csar directory
+    file:
+      path: "{{ item }}"
+      state: absent
+    with_items:
+      - helm
+      - heat
+      - csar
+  ###### Wypakowanie wszystkich chartow do katalogu helm ##################
   
   - name: Find all charts names
     find:
