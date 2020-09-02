@@ -4,6 +4,8 @@ service_description: "PUT SERVICE DESCRIPTION HERE"
 base_chart: "PUT BASE CHART NAME HERE"
 vendor: "PUT VENDOR NAME HERE"
 customer: "PUT CUSTOMER NAME HERE"
+k8s_rb_profile_name: "PUT K8S RB PROFILE NAME HERE"
+k8s_rb_profile_namespace: "PUT K8S RB PROFILE NAMESPACE HERE"
 region_details:
   region_id: "PUT REGION ID HERE"
   cloud_owner: "PUT CLOUD OWNER NAME HERE"
