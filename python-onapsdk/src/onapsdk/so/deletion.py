@@ -15,7 +15,7 @@ class DeletionRequest(OrchestrationRequest, ABC):
     """Deletion request base class."""
 
     @classmethod
-    def send_request(cls, instance: "AaiElement", use_vnf_api: bool = False) -> "Deletion":
+    def send_request(cls, instance: "AaiElement") -> "Deletion":
         """Abstract method to send instance deletion request.
 
         Raises:
@@ -25,19 +25,16 @@ class DeletionRequest(OrchestrationRequest, ABC):
         raise NotImplementedError
 
 
-class VfModuleDeletionRequest(DeletionRequest):  # pylint: disable=R0903
+class VfModuleDeletionRequest(DeletionRequest):  # pytest: disable=too-many-ancestors
     """VF module deletion class."""
 
     @classmethod
     def send_request(cls,
-                     instance: "VfModuleInstance",
-                     use_vnf_api: bool = False) -> "VfModuleDeletion":
+                     instance: "VfModuleInstance") -> "VfModuleDeletion":
         """Send request to SO to delete VNF instance.
 
         Args:
             vnf_instance (VnfInstance): VNF instance to delete
-            use_vnf_api (bool, optional): Flague to determine if VNF_API or GR_API
-                should be used to deletion. Defaults to False.
 
         Returns:
             VnfDeletionRequest: Deletion request object
@@ -55,26 +52,22 @@ class VfModuleDeletionRequest(DeletionRequest):  # pylint: disable=R0903
                                           f"vfModules/{instance.vf_module_id}"),
                                          data=jinja_env().
                                          get_template("deletion_vf_module.json.j2").
-                                         render(vf_module_instance=instance,
-                                                use_vnf_api=use_vnf_api),
+                                         render(vf_module_instance=instance),
                                          exception=ValueError,
                                          headers=headers_so_creator(OnapService.headers))
         return cls(request_id=response["requestReferences"]["requestId"])
 
 
-class VnfDeletionRequest(DeletionRequest):  # pylint: disable=R0903
+class VnfDeletionRequest(DeletionRequest):  # pytest: disable=too-many-ancestors
     """VNF deletion class."""
 
     @classmethod
     def send_request(cls,
-                     instance: "VnfInstance",
-                     use_vnf_api: bool = False) -> "VnfDeletionRequest":
+                     instance: "VnfInstance") -> "VnfDeletionRequest":
         """Send request to SO to delete VNF instance.
 
         Args:
             instance (VnfInstance): VNF instance to delete
-            use_vnf_api (bool, optional): Flague to determine if VNF_API or GR_API
-                should be used to deletion. Defaults to False.
 
         Returns:
             VnfDeletionRequest: Deletion request object
@@ -90,26 +83,22 @@ class VnfDeletionRequest(DeletionRequest):  # pylint: disable=R0903
                                           f"vnfs/{instance.vnf_id}"),
                                          data=jinja_env().
                                          get_template("deletion_vnf.json.j2").
-                                         render(vnf_instance=instance,
-                                                use_vnf_api=use_vnf_api),
+                                         render(vnf_instance=instance),
                                          exception=ValueError,
                                          headers=headers_so_creator(OnapService.headers))
         return cls(request_id=response["requestReferences"]["requestId"])
 
 
-class ServiceDeletionRequest(DeletionRequest):  # pylint: disable=R0903
+class ServiceDeletionRequest(DeletionRequest):  # pytest: disable=too-many-ancestors
     """Service deletion request class."""
 
     @classmethod
     def send_request(cls,
-                     instance: "ServiceInstance",
-                     use_vnf_api: bool = False) -> "ServiceDeletionRequest":
+                     instance: "ServiceInstance") -> "ServiceDeletionRequest":
         """Send request to SO to delete service instance.
 
         Args:
             instance (ServiceInstance): service instance to delete
-            use_vnf_api (bool, optional): Flague to determine if VNF_API or GR_API
-                should be used to deletion. Defaults to False.
 
         Returns:
             ServiceDeletionRequest: Deletion request object
@@ -123,8 +112,38 @@ class ServiceDeletionRequest(DeletionRequest):  # pylint: disable=R0903
                                           f"serviceInstances/{instance.instance_id}"),
                                          data=jinja_env().
                                          get_template("deletion_service.json.j2").
-                                         render(service_instance=instance,
-                                                use_vnf_api=use_vnf_api),
+                                         render(service_instance=instance),
+                                         exception=ValueError,
+                                         headers=headers_so_creator(OnapService.headers))
+        return cls(request_id=response["requestReferences"]["requestId"])
+
+
+class NetworkDeletionRequest(DeletionRequest):  # pylint: disable=too-many-ancestors
+    """Network deletion request class."""
+
+    @classmethod
+    def send_request(cls,
+                     instance: "NetworkInstance") -> "VnfDeletionRequest":
+        """Send request to SO to delete Network instance.
+
+        Args:
+            instance (NetworkInstance): Network instance to delete
+
+        Returns:
+            NetworkDeletionRequest: Deletion request object
+
+        """
+        cls._logger.debug("Network %s deletion request", instance.network_id)
+        response = cls.send_message_json("DELETE",
+                                         f"Create {instance.network_id} Network deletion request",
+                                         (f"{cls.base_url}/onap/so/infra/"
+                                          f"serviceInstantiation/{cls.api_version}/"
+                                          "serviceInstances/"
+                                          f"{instance.service_instance.instance_id}/"
+                                          f"networks/{instance.network_id}"),
+                                         data=jinja_env().
+                                         get_template("deletion_network.json.j2").
+                                         render(network_instance=instance),
                                          exception=ValueError,
                                          headers=headers_so_creator(OnapService.headers))
         return cls(request_id=response["requestReferences"]["requestId"])

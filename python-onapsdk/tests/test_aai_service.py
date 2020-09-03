@@ -12,8 +12,8 @@ from onapsdk.aai.cloud_infrastructure import (
     EsrSystemInfo,
     Tenant
 )
-from onapsdk.aai.instances import Customer
-from onapsdk.aai.service_design_and_creation import Service
+from onapsdk.aai.business import Customer
+from onapsdk.aai.service_design_and_creation import Service, Model
 from onapsdk.onap_service import OnapService
 
 
@@ -227,18 +227,6 @@ CLOUD_REGION_RELATIONSHIP = {
                 }
             ],
             "related-to": "complex",
-        }
-    ]
-}
-
-
-CUSTOMERS = {
-    "customer": [
-        {
-            "subscriber-name": "generic",
-            "subscriber-type": "INFRA",
-            "global-customer-id": "generic",
-            "resource-version": "1581510772967",
         }
     ]
 }
@@ -516,16 +504,6 @@ def test_cloud_region_creation(mock_send):
     assert cloud_region.cloud_extra_info == ""
     assert cloud_region.upgrade_cycle == "Test"
 
-@mock.patch.object(AaiElement, 'send_message_json')
-def test_customer_service_tenant_relations(mock_send):
-    """Test the retrieval of service/tenant relations in A&AI."""
-    mock_send.return_value = SIMPLE_CUSTOMER
-    customer = next(Customer.get_all())
-    mock_send.return_value = SERVICE_SUBSCRIPTION
-    res = list(customer.service_subscriptions)
-    assert len(res) == 2
-    assert res[0].service_type == "freeradius"
-
 @mock.patch.object(CloudRegion, 'get_all')
 @mock.patch.object(AaiElement, 'send_message_json')
 def test_tenants_info(mock_send, mock_cloud_regions):
@@ -659,16 +637,14 @@ def test_filter_none_value():
     assert ret == {"a": "b", "c": "d"}
 
 
-@mock.patch.object(Customer, "send_message_json")
-def test_customers_get_all(mock_send):
-    """Test get_all Customer class method."""
-    mock_send.return_value = {}
-    customers = list(Customer.get_all())
-    assert len(customers) == 0
-
-    mock_send.return_value = CUSTOMERS
-    customers = list(Customer.get_all())
-    assert len(customers) == 1
+@mock.patch.object(AaiElement, "send_message")
+def test_add_relationship(mock_send):
+    """Test add_relationship method."""
+    cloud_region = CloudRegion(cloud_owner="tester", cloud_region_id="test",
+                               orchestration_disabled=True, in_maint=False)
+    cloud_region.add_relationship(Relationship(related_to="test",
+                                               related_link="test",
+                                               relationship_data={}))
 
 
 # # -----------------------------------------------------------------------------
@@ -703,3 +679,69 @@ def test_customers_get_all(mock_send):
 # def test_check_aai_resource_net_not_found():
 #     """Test that a given net is not in A&AI (cleaned)."""
 #     pass
+
+
+# pylint: disable=C0301
+SIMPLE_MODEL = {
+    "model": [
+        {
+            "model-invariant-id": "1234567890",
+            "model-type": "generic",
+            "resource-version": "1561218640404",
+        }
+    ]
+}
+# pylint: enable=C0301
+
+
+def test_service_url():
+    """Test service property"""
+    service = Service("12345", "description", "version1.0")
+    assert service.url == (f"{service.base_url}{service.api_version}/service-design-and-creation/services/service/"
+                f"{service.service_id}?resource-version={service.resource_version}")
+
+
+@mock.patch.object(Service, 'send_message')
+def test_service_create(mock_send):
+    """Test service creation"""
+    Service.create("1234", "description")
+    mock_send.assert_called_once()
+    method, description, url = mock_send.call_args[0]
+    assert method == "PUT"
+    assert description == "Create A&AI service"
+    assert url == (f"{Service.base_url}{Service.api_version}/service-design-and-creation/"
+                   f"services/service/1234")
+
+
+def test_model_init():
+    """Test model initailization"""
+    model = Model("12345", "ubuntu", "version16")
+    assert isinstance(model, Model)
+
+
+def test_model_url():
+    """Test Model's url property"""
+    model = Model("12345", "ubuntu", "version16")
+    assert model.url == (f"{model.base_url}{model.api_version}/service-design-and-creation/models/"
+                         f"model/{model.invariant_id}?resource-version={model.resource_version}")
+
+
+@mock.patch.object(Model, 'send_message_json')
+def test_zero_model_get_all(mock_send_message_json):
+    """Test get_all Model class method"""
+    mock_send_message_json.return_value = {}
+    Model.get_all()
+    assert len(list(Model.get_all())) == 0
+
+
+@mock.patch.object(Model, 'send_message_json')
+def test_model_get_all(mock_send_message_json):
+    """Test get_all Model class method"""
+    mock_send_message_json.return_value = SIMPLE_MODEL
+    Model.get_all()
+    assert len(list(Model.get_all())) == 1
+    model_1 = next(Model.get_all())
+    assert model_1.invariant_id == "1234567890"
+    assert model_1.model_type == "generic"
+    assert model_1.resource_version == "1561218640404"
+    mock_send_message_json.assert_called_with("GET", 'Get A&AI sdc models', mock.ANY)
