@@ -50,5 +50,5 @@
     include_vars: ../global-config.yml
   - name: Read values from CBA TOSCA.meta
     include_tasks: config/read_model_name_version_from_cba_tosca.yml
-#  - name: Run onboarding and instantiation script
-#    shell: cd ../python-onapsdk/src && pipenv install --python=python3.8 && pipenv run python script.py "{{vendor}}" "{{customer}}" "{{region_details.cloud_owner}}" "{{region_details.region_id}}" "{{region_details.tenant}}" "{{service_name}}"
+  - name: Run onboarding and instantiation script
+    shell: cd ../python-onapsdk/src && pipenv install --python=python3.8 && pipenv run python script.py "{{vendor}}" "{{customer}}" "{{region_details.cloud_owner}}" "{{region_details.region_id}}" "{{region_details.tenant}}" "{{service_name}}" "{{template_name}}" "{{template_version}}" "{{k8s_rb_profile_name}}" "{{k8s_rb_profile_namespace}}"
