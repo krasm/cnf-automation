@@ -53,7 +53,8 @@
       repo: 'https://gitlab.com/Orange-OpenSource/lfn/onap/python-onapsdk.git'
       dest: ../python-onapsdk
       version: develop
-
+  - name: Move instantiation script to python-onapsdk
+    command: mv ../script.py ../python-onapsdk/src/
 #  - name: Read values from CBA TOSCA.meta
 #    include_tasks: config/read_model_name_version_from_cba_tosca.yml
 #  - name: Run onboarding and instantiation script
