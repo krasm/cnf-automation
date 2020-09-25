@@ -1,11 +1,11 @@
---- 
-service_name: "PUT SERVICE NAME HERE" 
-service_description: "PUT SERVICE DESCRIPTION HERE" 
-base_chart: "PUT BASE CHART NAME HERE" 
-vendor: "PUT VENDOR NAME HERE" 
-customer: "PUT CUSTOMER NAME HERE" 
-k8s_rb_profile_name: "PUT K8S RB PROFILE NAME HERE" 
-k8s_rb_profile_namespace: "PUT K8S RB PROFILE NAMESPACE HERE" 
+---
+service_name: "PUT SERVICE NAME HERE"
+service_description: "PUT SERVICE DESCRIPTION HERE"
+base_chart: "PUT BASE CHART NAME HERE"
+vendor: "PUT VENDOR NAME HERE"
+customer: "PUT CUSTOMER NAME HERE"
+k8s_rb_profile_name: "PUT K8S RB PROFILE NAME HERE"
+k8s_rb_profile_namespace: "PUT K8S RB PROFILE NAMESPACE HERE"
 region_details:
   region_id: "PUT REGION ID HERE"
   cloud_owner: "PUT CLOUD OWNER NAME HERE"
@@ -15,7 +15,8 @@ region_details:
   complex: "PUT COMPLEX NAME HERE"
   cloud_version: 2.5
   tenant: "PUT TENANT NAME HERE"
-  availability_zone: "PUT AVAILABILITY ZONE NAME HERE" etc_hosts:
+  availability_zone: "PUT AVAILABILITY ZONE NAME HERE" 
+etc_hosts:
   urls:
     - aai.api.sparky.simpledemo.onap.org
     - cli.api.simpledemo.onap.org
@@ -33,9 +34,9 @@ region_details:
     - sdc.workflow.plugin.simpledemo.onap.org
     - sdnc.api.simpledemo.onap.org
     - so.api.simpledemo.onap.org
-    - vid.api.simpledemo.onap.org 
-kubeconfig: config/kubeconfig 
-ONAP_k8s_IP: "PUT ONE OF ONAP NODE IP ADDRESS HERE" 
-RANCHER_IP: "PUT ONAP RANCHER/NFS IP ADDRESS HERE" 
-AAI_user: AAI 
+    - vid.api.simpledemo.onap.org
+kubeconfig: config/kubeconfig
+ONAP_k8s_IP: "PUT ONE OF ONAP NODE IP ADDRESS HERE"
+RANCHER_IP: "PUT ONAP RANCHER/NFS IP ADDRESS HERE"
+AAI_user: AAI
 AAI_pass: AAI
