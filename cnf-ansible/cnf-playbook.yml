@@ -57,6 +57,15 @@
   - name: Copy instantiation script to python-onapsdk
     command: cp ../script.py ../python-onapsdk/src/
 
+  - name: Clone demo repository
+    git:
+      repo: 'https://github.com/onap/demo.git'
+      dest: ../demo
+  - name: Make vFW_CNF_CDS usecase
+    shell: cd ../demo/heat/vFW_CNF_CDS/templates && make
+  - name: Copy zip to csar-prepare directory
+    shell: cp ../demo/heat/vFW_CNF_CDS/templates/vfw_k8s_demo.zip ../csar-prepare/{{service_name}}_CNF.zip
+
   - name: Read values from CBA TOSCA.meta
     include_tasks: config/read_model_name_version_from_cba_tosca.yml
   #- name: Get vf_module_labels

@@ -1,21 +1,21 @@
----
-service_name: "PUT SERVICE NAME HERE"
-service_description: "PUT SERVICE DESCRIPTION HERE"
-base_chart: "PUT BASE CHART NAME HERE"
-vendor: "PUT VENDOR NAME HERE"
-customer: "PUT CUSTOMER NAME HERE"
-k8s_rb_profile_name: "PUT K8S RB PROFILE NAME HERE"
-k8s_rb_profile_namespace: "PUT K8S RB PROFILE NAMESPACE HERE"
+--- 
+service_name: vfw20
+service_description: vfw cnf cds use case
+base_chart: base_template
+vendor: Michal_vendor
+customer: Michal_customer
+k8s_rb_profile_name: vfw-cnf-cds-base-profile
+k8s_rb_profile_namespace: cnf-namespace-1
 region_details:
-  region_id: "PUT REGION ID HERE"
-  cloud_owner: "PUT CLOUD OWNER NAME HERE"
+  region_id: k8s-region-3
+  cloud_owner: k8sCloudOwner
   type: k8s
   orchestrator: multicloud
   identity_service: DEFAULT_KEYSTONE
-  complex: "PUT COMPLEX NAME HERE"
+  complex: complexmc
   cloud_version: 2.5
-  tenant: "PUT TENANT NAME HERE"
-  availability_zone: "PUT AVAILABILITY ZONE NAME HERE" 
+  tenant: k8s-tenant-3
+  availability_zone: k8s_availability_zone_1
 etc_hosts:
   urls:
     - aai.api.sparky.simpledemo.onap.org
@@ -36,7 +36,7 @@ etc_hosts:
     - so.api.simpledemo.onap.org
     - vid.api.simpledemo.onap.org
 kubeconfig: config/kubeconfig
-ONAP_k8s_IP: "PUT ONE OF ONAP NODE IP ADDRESS HERE"
-RANCHER_IP: "PUT ONAP RANCHER/NFS IP ADDRESS HERE"
+ONAP_k8s_IP: 10.254.184.254
+RANCHER_IP: 10.254.184.254
 AAI_user: AAI
 AAI_pass: AAI

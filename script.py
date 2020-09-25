@@ -73,7 +73,7 @@ SDNC_MODEL_NAME = sys.argv[7]
 SDNC_MODEL_VERSION = sys.argv[8]
 K8S_RB_PROFILE_NAME = sys.argv[9]
 K8S_RB_PROFILE_NAMESPACE = sys.argv[10]
-VF_MODULE_LIST = sys.argv[11]
+VF_MODULE_LIST = ["base_template", "vfw", "vpkg", "vsn"]
 
 logger.info("*******************************")
 logger.info("******** SERVICE DESIGN *******")
