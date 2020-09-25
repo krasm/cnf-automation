@@ -24,6 +24,7 @@ from onapsdk.aai.business import (
     Customer,
     OwningEntity as AaiOwningEntity
 )
+from onapsdk.msb.k8s import Definition
 from onapsdk.sdc.properties import Property
 from onapsdk.so.instantiation import (
     ServiceInstantiation,
@@ -72,6 +73,7 @@ SDNC_MODEL_NAME = sys.argv[7]
 SDNC_MODEL_VERSION = sys.argv[8]
 K8S_RB_PROFILE_NAME = sys.argv[9]
 K8S_RB_PROFILE_NAMESPACE = sys.argv[10]
+VF_MODULE_LIST = sys.argv[11]
 
 logger.info("*******************************")
 logger.info("******** SERVICE DESIGN *******")
@@ -205,6 +207,17 @@ for oe in AaiOwningEntity.get_all():
 if not owning_entity:
     logger.info("******** Owning Entity not existing: create *******")
     owning_entity = AaiOwningEntity.create(vid_owning_entity.name, str(uuid4()))
+
+logger.info("******** Delete old profiles ********")
+for vnf in service.vnfs:
+    for vf_module in vnf.vf_modules:
+        definition = Definition.get_definition_by_name_version(vf_module.metadata["vfModuleModelInvariantUUID"],
+                                                                   vf_module.metadata["vfModuleModelUUID"])
+        try:
+            profile = definition.get_profile_by_name("vfw-cnf-cds-base-profile")
+            profile.delete()
+        except ValueError:
+            logger.info("Profile: vfw-cnf-cds-base-profile for " + vf_module.name + "not found")
 
 logger.info("******** Instantiate Service *******")
 service_instance = None
