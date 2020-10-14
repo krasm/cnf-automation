@@ -51,9 +51,7 @@
     git:
       repo: 'https://gitlab.com/Orange-OpenSource/lfn/onap/python-onapsdk.git'
       dest: ../python-onapsdk
-      version: 49-multicloud-k8s-plugin-support
-  - name: Merge develop
-    shell: cd ../python-onapsdk && git merge origin/develop
+      version: develop
   - name: Copy instantiation script to python-onapsdk
     command: cp ../script.py ../python-onapsdk/src/
 
