@@ -151,13 +151,13 @@ if not service_instance:
     vfmodules_param = []
     for vfmodule in vfmodules_list:
         params = [
-            InstantiationParameter(name="k8s-rb-profile-name", value="wef-cnf-cds-base-profile"),
-            InstantiationParameter(name="k8s-rb-profile-namespace", value=NAMESPACE_NAME),
+            InstantiationParameter(name="k8s-rb-profile-name", value=vfmodule["k8s-rb-profile-name"]),
+            InstantiationParameter(name="k8s-rb-profile-namespace", value=vfmodule["k8s-rb-profile-namespace"]),
             InstantiationParameter(name="sdnc_model_name", value=SDNC_MODEL_NAME),
             InstantiationParameter(name="sdnc_model_version", value=SDNC_MODEL_VERSION),
-            InstantiationParameter(name="vf_module_label", value=vfmodule)]
+            InstantiationParameter(name="vf_module_label", value=vfmodule["name"])]
 
-        vfmodules_param.append(VfmoduleParameters(vfmodule, params))
+        vfmodules_param.append(VfmoduleParameters(vfmodule["name"], params))
 
     vnf_params = VnfParameters(name=VFNAME, vnf_parameters=vnf_param, vfmodule_parameters=vfmodules_param)
 
