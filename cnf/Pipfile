@@ -7,7 +7,7 @@ verify_ssl = true
 
 [packages]
 onapsdk = "*"
+kubernetes = "*"
 
 [requires]
 python_version = "3.8"
-

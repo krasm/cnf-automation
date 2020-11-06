@@ -1,7 +1,7 @@
 import logging
 import os
 
-from cnf.config import *
+from config import *
 from onapsdk.msb.k8s import ConnectivityInfo
 
 logger = logging.getLogger("")

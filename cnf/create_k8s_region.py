@@ -2,8 +2,8 @@ import logging
 import os
 from uuid import uuid4
 
-from cnf.config import *
-from cnf.so_db_adapter import SoDBAdapter
+from config import *
+from so_db_adapter import SoDBAdapter
 from onapsdk.aai.business import Customer
 from onapsdk.aai.cloud_infrastructure import Complex, CloudRegion
 from onapsdk.msb.k8s import ConnectivityInfo

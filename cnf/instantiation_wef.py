@@ -3,7 +3,7 @@
 
 import logging
 
-from cnf.config import *
+from config import *
 from onapsdk.aai.cloud_infrastructure import (
     CloudRegion,
 )
