@@ -119,16 +119,18 @@ for vnf in service.vnfs:
     for vf_module in vnf.vf_modules:
         definition = Definition.get_definition_by_name_version(vf_module.metadata["vfModuleModelInvariantUUID"],
                                                                vf_module.metadata["vfModuleModelUUID"])
+        vf_module_label = vf_module.properties["vf_module_label"]
+        profile_name = VF_MODULE_LIST[vf_module_label]["k8s-rb-profile-name"]
         try:
-            profile = definition.get_profile_by_name(PROFILE_NAME)
-            if profile.namespace != NAMESPACE_NAME:
+            profile = definition.get_profile_by_name(profile_name)
+            if profile.namespace != VF_MODULE_LIST[vf_module_label]["k8s-rb-profile-namespace"]:
                 profile.delete()
-                logger.info("Profile: " + PROFILE_NAME + " for " + vf_module.name + " deleted")
+                logger.info("Profile: " + profile_name + " for " + vf_module.name + " deleted")
             else:
-                logger.info("No need to delete Profile " + PROFILE_NAME + " for " + vf_module.name +
-                            ". Namespace is fine")
+                logger.info("No need to delete Profile " + profile_name +
+                            " for " + vf_module.name + ". Namespace is fine")
         except ValueError:
-            logger.info("Profile: " + PROFILE_NAME + " for " + vf_module.name + " not found")
+            logger.info("Profile: " + profile_name + " for " + vf_module.name + " not found")
 
 
 logger.info("******** Instantiate Service *******")
@@ -151,13 +153,13 @@ if not service_instance:
     vfmodules_param = []
     for vfmodule in vfmodules_list:
         params = [
-            InstantiationParameter(name="k8s-rb-profile-name", value=vfmodule["k8s-rb-profile-name"]),
-            InstantiationParameter(name="k8s-rb-profile-namespace", value=vfmodule["k8s-rb-profile-namespace"]),
+            InstantiationParameter(name="k8s-rb-profile-name", value=vfmodules_list[vfmodule]["k8s-rb-profile-name"]),
+            InstantiationParameter(name="k8s-rb-profile-namespace", value=vfmodules_list[vfmodule]["k8s-rb-profile-namespace"]),
             InstantiationParameter(name="sdnc_model_name", value=SDNC_MODEL_NAME),
             InstantiationParameter(name="sdnc_model_version", value=SDNC_MODEL_VERSION),
-            InstantiationParameter(name="vf_module_label", value=vfmodule["name"])]
+            InstantiationParameter(name="vf_module_label", value=vfmodules_list[vfmodule]["name"])]
 
-        vfmodules_param.append(VfmoduleParameters(vfmodule["name"], params))
+        vfmodules_param.append(VfmoduleParameters(vfmodules_list[vfmodule]["name"], params))
 
     vnf_params = VnfParameters(name=VFNAME, vnf_parameters=vnf_param, vfmodule_parameters=vfmodules_param)
 

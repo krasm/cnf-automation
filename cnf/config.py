@@ -7,7 +7,6 @@ CLOUD_REGION = "k8s-region-2"
 AVAILABILITY_ZONE_NAME = "k8s-availability-zone"
 HYPERVISOR_TYPE = "k8s"
 TENANT_NAME = "k8s-tenant-1"
-NAMESPACE_NAME = "vfirewall"
 
 CLUSTER_KUBECONFIG_PATH = "artifacts/cluster_kubeconfig"
 ONAP_KUBECONFIG_PATH = "artifacts/onap_kubeconfig"
@@ -19,18 +18,22 @@ VENDOR = "Michal_vendor"
 SERVICENAME = "vfw_k8s_demo_CNF"
 VSPNAME = "VSP_" + SERVICENAME
 VFNAME = "VF_" + SERVICENAME
-VF_MODULE_LIST = [{"name": "base_template",
-                   "k8s-rb-profile-name": "vfw-cnf-cds-base-profile",
-                   "k8s-rb-profile-namespace": "vfirewall"},
-                  {"name": "vfw",
-                   "k8s-rb-profile-name": "vfw-cnf-cds-base-profile",
-                   "k8s-rb-profile-namespace": "vfirewall"},
-                  {"name": "vpkg",
-                   "k8s-rb-profile-name": "vfw-cnf-cds-base-profile",
-                   "k8s-rb-profile-namespace": "vfirewall"},
-                  {"name": "vsn",
-                   "k8s-rb-profile-name": "vfw-cnf-cds-base-profile",
-                   "k8s-rb-profile-namespace": "vfirewall"}]
+VF_MODULE_LIST = {"base_template":
+                      {"name": "base_template",
+                       "k8s-rb-profile-name": "vfw-cnf-cds-base-profile",
+                       "k8s-rb-profile-namespace": "vfirewall"},
+                  "vfw":
+                      {"name": "vfw",
+                       "k8s-rb-profile-name": "vfw-cnf-cds-base-profile",
+                       "k8s-rb-profile-namespace": "vfirewall"},
+                  "vpkg":
+                      {"name": "vpkg",
+                       "k8s-rb-profile-name": "vfw-cnf-cds-base-profile",
+                       "k8s-rb-profile-namespace": "vfirewall"},
+                  "vsn":
+                      {"name": "vsn",
+                       "k8s-rb-profile-name": "vfw-cnf-cds-base-profile",
+                       "k8s-rb-profile-namespace": "vfirewall"}}
 PROFILE_NAME = "vfw-cnf-cds-base-profile"
 SERVICE_INSTANCE_NAME = "INSTANCE_" + SERVICENAME + str(uuid4())
 
