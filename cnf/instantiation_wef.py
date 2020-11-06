@@ -121,7 +121,12 @@ for vnf in service.vnfs:
                                                                vf_module.metadata["vfModuleModelUUID"])
         try:
             profile = definition.get_profile_by_name(PROFILE_NAME)
-            profile.delete()
+            if profile.namespace != NAMESPACE_NAME:
+                profile.delete()
+                logger.info("Profile: " + PROFILE_NAME + " for " + vf_module.name + " deleted")
+            else:
+                logger.info("No need to delete Profile " + PROFILE_NAME + " for " + vf_module.name +
+                            ". Namespace is fine")
         except ValueError:
             logger.info("Profile: " + PROFILE_NAME + " for " + vf_module.name + " not found")
 
