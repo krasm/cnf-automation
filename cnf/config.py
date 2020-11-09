@@ -1,6 +1,6 @@
-#### REGION DETAILS ####
 from uuid import uuid4
 
+#### REGION DETAILS ####
 COMPLEX_ID = "complex"
 CLOUD_OWNER = "k8sCloudOwner"
 CLOUD_REGION = "k8s-region-1"  # Fill
