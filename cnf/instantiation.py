@@ -2,6 +2,10 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import logging
+import zipfile
+from io import BytesIO
+
+import oyaml as yaml
 
 from config import *
 from onapsdk.aai.cloud_infrastructure import (
@@ -132,6 +136,17 @@ for vnf in service.vnfs:
         except ValueError:
             logger.info("Profile: " + profile_name + " for " + vf_module.name + " not found")
 
+# Read SDNC MODEL NAME and VERSION from CBA.zip
+logger.info("*******************************")
+logger.info("Retrieving SDNC MODEL NAME and VERSION")
+logger.info("*******************************")
+with zipfile.ZipFile(VSPFILE, 'r') as package:
+    cba_io = BytesIO(package.read("CBA.zip"))
+    with zipfile.ZipFile(cba_io) as cba:
+        with cba.open('TOSCA-Metadata/TOSCA.meta') as meta_file:
+            tosca_meta = yaml.load(meta_file, Loader=yaml.FullLoader)
+            SDNC_MODEL_NAME = tosca_meta.get("Template-Name")
+            SDNC_MODEL_VERSION = tosca_meta.get("Template-Version")
 
 logger.info("******** Instantiate Service *******")
 service_instance = None

@@ -37,8 +37,6 @@ VF_MODULE_LIST = {"base_template":
 SERVICE_INSTANCE_NAME = "INSTANCE_" + SERVICENAME + str(uuid4())
 
 SDNC_ARTIFACT_NAME = "vnf"
-SDNC_MODEL_NAME = "vFW_CNF_CDS"  # used only for instantiation
-SDNC_MODEL_VERSION = "7.0.0"  # used only for instantiation
 
 ######## DEFAULT VALUES ########
 OWNING_ENTITY = "OE-Demonstration"
