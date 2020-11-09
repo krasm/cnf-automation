@@ -34,7 +34,6 @@ VF_MODULE_LIST = {"base_template":
                       {"name": "vsn",
                        "k8s-rb-profile-name": "vfw-cnf-cds-base-profile",
                        "k8s-rb-profile-namespace": "vfirewall"}}
-PROFILE_NAME = "vfw-cnf-cds-base-profile"
 SERVICE_INSTANCE_NAME = "INSTANCE_" + SERVICENAME + str(uuid4())
 
 SDNC_ARTIFACT_NAME = "vnf"
