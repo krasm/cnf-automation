@@ -9,7 +9,7 @@ from io import BytesIO
 
 import oyaml as yaml
 
-from config import *
+from cnf import Config
 from onapsdk.sdc.properties import Property
 
 from onapsdk.sdc.vendor import Vendor
@@ -30,7 +30,7 @@ logger.addHandler(fh)
 logger.info("*******************************")
 logger.info("Retrieving SDNC MODEL NAME and VERSION")
 logger.info("*******************************")
-with zipfile.ZipFile(VSPFILE, 'r') as package:
+with zipfile.ZipFile(Config.VSPFILE, 'r') as package:
     cba_io = BytesIO(package.read("CBA.zip"))
     with zipfile.ZipFile(cba_io) as cba:
         with cba.open('TOSCA-Metadata/TOSCA.meta') as meta_file:
@@ -43,27 +43,27 @@ logger.info("******** SERVICE DESIGN *******")
 logger.info("*******************************")
 
 logger.info("******** Onboard Vendor *******")
-vendor = Vendor(name=VENDOR)
+vendor = Vendor(name=Config.VENDOR)
 vendor.onboard()
 
 logger.info("******** Onboard VSP *******")
 mypath = os.path.dirname(os.path.realpath(__file__))
-myvspfile = os.path.join(mypath, VSPFILE)
-vsp = Vsp(name=VSPNAME, vendor=vendor, package=open(myvspfile, 'rb'))
+myvspfile = os.path.join(mypath, Config.VSPFILE)
+vsp = Vsp(name=Config.VSPNAME, vendor=vendor, package=open(myvspfile, 'rb'))
 vsp.onboard()
 
 logger.info("******** Onboard VF *******")
-vf = Vf(name=VFNAME, properties=[
+vf = Vf(name=Config.VFNAME, properties=[
     Property(name="sdnc_model_name", property_type="string", value=SDNC_MODEL_NAME),
     Property(name="sdnc_model_version", property_type="string", value=SDNC_MODEL_VERSION),
-    Property(name="sdnc_artifact_name", property_type="string", value=SDNC_ARTIFACT_NAME)
+    Property(name="sdnc_artifact_name", property_type="string", value=Config.SDNC_ARTIFACT_NAME)
 ]
         )
 vf.vsp = vsp
 vf.onboard()
 
 logger.info("******** Onboard Service *******")
-svc = Service(name=SERVICENAME, resources=[vf], instantiation_type=ServiceInstantiationType.MACRO)
+svc = Service(name=Config.SERVICENAME, resources=[vf], instantiation_type=ServiceInstantiationType.MACRO)
 svc.onboard()
 
 logger.info("******** Check Service Distribution *******")
