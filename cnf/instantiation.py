@@ -64,7 +64,7 @@ logger.info("******** Check Service Subscription *******")
 service_subscription = None
 for service_sub in customer.service_subscriptions:
     logger.debug("Service subscription %s is found", service_sub.service_type)
-    if service_sub.service_type == Config.ERVICENAME:
+    if service_sub.service_type == Config.SERVICENAME:
         logger.info("Service %s subscribed", Config.SERVICENAME)
         service_subscription = service_sub
         break
