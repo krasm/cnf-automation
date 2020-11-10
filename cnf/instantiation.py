@@ -8,7 +8,7 @@ from uuid import uuid4
 
 import oyaml as yaml
 
-from cnf import Config
+from config import Config
 from onapsdk.aai.cloud_infrastructure import (
     CloudRegion,
 )

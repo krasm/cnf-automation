@@ -9,7 +9,7 @@ from io import BytesIO
 
 import oyaml as yaml
 
-from cnf import Config
+from config import Config
 from onapsdk.sdc.properties import Property
 
 from onapsdk.sdc.vendor import Vendor
