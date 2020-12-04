@@ -20,7 +20,7 @@ class Config:
     SERVICENAME = "vfw_k8s_demo_CNF"  # Fill
     VSPNAME = "VSP_" + SERVICENAME
     VFNAME = "VF_" + SERVICENAME
-    SERVICE_INSTANCE_NAME = "INSTANCE_" + SERVICENAME + str(uuid4())
+    SERVICE_INSTANCE_NAME = "INSTANCE_" + SERVICENAME
     SDNC_ARTIFACT_NAME = "vnf"
 
     # Fill the vf-module list with vf module labels, profiles and namespaces names
