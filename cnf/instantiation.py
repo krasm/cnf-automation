@@ -180,14 +180,14 @@ if not service_instance:
     vnf_params = VnfParameters(name=Config.VFNAME, vnf_parameters=vnf_param, vfmodule_parameters=vfmodules_param)
 
     service_instantiation = ServiceInstantiation.instantiate_macro(
-        service,
-        cloud_region,
-        tenant,
-        customer,
-        owning_entity,
-        vid_project,
-        vid_line_of_business,
-        vid_platform,
+        sdc_service=service,
+        cloud_region=cloud_region,
+        tenant=tenant,
+        customer=customer,
+        owning_entity=owning_entity,
+        project=vid_project,
+        line_of_business=vid_line_of_business,
+        platform=vid_platform,
         service_instance_name=Config.SERVICE_INSTANCE_NAME,
         vnf_parameters=[vnf_params]
     )
