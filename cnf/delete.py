@@ -2,7 +2,7 @@ import logging
 
 from onapsdk.aai.business import Customer
 
-from cnf.config import Config
+from config import Config
 
 logger = logging.getLogger("")
 logger.setLevel(logging.DEBUG)
@@ -40,9 +40,5 @@ if not service_instance:
     logger.error("Service Instance not found")
     exit(1)
 
-logger.info("******** Delete Service %s *******", service_instance.name)
+logger.info("******** Delete Service %s *******", service_instance.instance_name)
 service_deletion = service_instance.delete()
-if service_deletion.wait_for_finish():
-    logger.info("Service deleted")
-else:
-    logger.error("Service deletion failed")
