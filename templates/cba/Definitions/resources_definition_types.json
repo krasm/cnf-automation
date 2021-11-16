@@ -1192,11 +1192,11 @@
             }
         }
     },
-    "vpg-management-port": {
-        "tags": "vpg-management-port",
-        "name": "vpg-management-port",
+    "replica-count": {
+        "tags": "replica-count",
+        "name": "replica-count",
         "property": {
-            "description": "vpg-management-port",
+            "description": "replica-count",
             "type": "integer"
         },
         "group": "default",

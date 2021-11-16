@@ -19,7 +19,7 @@
 
 REQ_ID=`shuf -i 1-1000000 -n 1`
 SUB_REQ_ID=$REQ_ID"-"`shuf -i 1-1000 -n 1`
-TEMPLATE_NAME="helm_base_template"
+TEMPLATE_NAME="helm_apache"
 
 curl --location --request POST 'http://localhost:8081/api/v1/execution-service/process' \
 --header 'Authorization: Basic Y2NzZGthcHBzOmNjc2RrYXBwcw==' \
@@ -31,8 +31,8 @@ curl --location --request POST 'http://localhost:8081/api/v1/execution-service/p
         "subRequestId": "'$SUB_REQ_ID'"
     },
     "actionIdentifiers": {
-        "blueprintName": "vFW_CNF_CDS",
-        "blueprintVersion": "8.0.0",
+        "blueprintName": "APACHE",
+        "blueprintVersion": "1.0.0",
         "actionName": "resource-assignment",
         "mode": "sync"
     },
@@ -43,7 +43,7 @@ curl --location --request POST 'http://localhost:8081/api/v1/execution-service/p
             ],
             "resolution-key": "ra-test-resolution",
             "resource-assignment-properties": {
-                "vpg-management-port": 100,
+                "replica-count": 2,
                 "aic-cloud-region": "RegionOne",
                 "vnf-model-customization-uuid": "d73864db-1f6e-4e54-a533-a96773c926a4",
                 "service-instance-id": "2afee7c4-8b16-4f2f-a567-48fb7948abcf",

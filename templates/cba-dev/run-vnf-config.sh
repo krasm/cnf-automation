@@ -31,14 +31,14 @@ curl --location --request POST 'http://localhost:8081/api/v1/execution-service/p
         "subRequestId": "'$SUB_REQ_ID'"
     },
     "actionIdentifiers": {
-        "blueprintName": "vFW_CNF_CDS",
-        "blueprintVersion": "8.0.0",
+        "blueprintName": "APACHE",
+        "blueprintVersion": "1.0.0",
         "actionName": "'config-$ACTION'",
         "mode": "sync"
     },
     "payload": {
        "'config-$ACTION-request'": {
-           "resolution-key": "VF_vfw_k8s_demo_CNF_KUD-6",
+           "resolution-key": "VF_apache_k8s_demo_CNF",
            "'config-$ACTION-properties'": {
                "service-instance-id": "889670f7-ed49-41b0-a251-b43e9a035811",
                "service-model-uuid": "bea61c93-1a90-426b-9fbe-6024bde48419",

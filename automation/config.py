@@ -27,7 +27,7 @@ class Config:
     GLOBAL_CUSTOMER_ID = "customer_cnf"
     VSPFILE = "vsp/native_cnf_k8s_demo.zip"
 
-    PROFILE_NAME = "cnf-cds-base-profile"
+    PROFILE_NAME = "node-port-profile"
     PROFILE_SOURCE = PROFILE_NAME
     RELEASE_NAME = "rel-1"
 
@@ -53,7 +53,11 @@ class Config:
                 "k8s-rb-profile-name": PROFILE_NAME,
                 "k8s-rb-profile-source": PROFILE_SOURCE,
                 "k8s-rb-instance-release-name": RELEASE_NAME + "-apache",
-                "k8s-rb-profile-namespace": K8S_NAMESPACE
+                "k8s-rb-profile-namespace": K8S_NAMESPACE,
+                "k8s-rb-config-template-name": "replica-count-template",
+                "k8s-rb-config-template-source": "deployment-config",
+                "k8s-rb-config-name": "replica-count-change",
+                "k8s-rb-config-value-source": "custom-values"
             },
             "cloud_configuration": K8S_REGION
         }

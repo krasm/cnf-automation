@@ -54,13 +54,12 @@ open class SimpleStatusCheck : AbstractScriptComponentFunction() {
                 val instanceName = it.value.get("k8s-instance-id").asText()
 
                 val instanceStatus: K8sRbInstanceStatus? = instanceApi.getInstanceStatus(instanceName)
-                log.debug("Get status for ${vfModuleName} (${instanceName})")
+                log.debug("Get status for $vfModuleName ($instanceName)")
                 if (!instanceStatus?.ready!!) {
                     continueCheck = true
-                    log.info("VfModule ${vfModuleName} (${instanceName}) is not ready. Please wait...")
-                }
-                else {
-                    log.info("VfModule ${vfModuleName} (${instanceName}) is ready.")
+                    log.info("VfModule $vfModuleName ($instanceName) is not ready. Please wait...")
+                } else {
+                    log.info("VfModule $vfModuleName ($instanceName) is ready.")
                 }
             }
             if (continueCheck) {

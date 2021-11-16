@@ -75,21 +75,6 @@
         ]
     },
     {
-        "name": "registration-reconfiguration-parameters",
-        "property": {
-            "description": "configuration for config value setup",
-            "type": "json"
-        },
-        "input-param": false,
-        "dictionary-name": "registration-reconfiguration-parameters",
-        "dictionary-source": "capability",
-        "dependencies": [
-            "pnf-details-aai",
-            "service-instance-id",
-            "vnf-id"
-        ]
-    },
-    {
         "name": "service-instance-name",
         "property": {
             "description": "Service instance name retrieved based on service instance id",
@@ -100,33 +85,6 @@
         "dictionary-source": "sdnc",
         "dependencies": [
             "service-instance-id"
-        ]
-    },
-    {
-        "name": "pnf-instance-name",
-        "property": {
-            "description": "PNF details stored in AAI",
-            "type": "string"
-        },
-        "input-param": false,
-        "dictionary-name": "pnf-instance-name",
-        "dictionary-source": "capability",
-        "dependencies": [
-            "service-instance-name",
-            "vf-modules-list-sdnc"
-        ]
-    },
-    {
-        "name": "pnf-details-aai",
-        "property": {
-            "description": "PNF details stored in AAI",
-            "type": "json"
-        },
-        "input-param": false,
-        "dictionary-name": "pnf-details-aai",
-        "dictionary-source": "aai-data",
-        "dependencies": [
-            "pnf-instance-name"
         ]
     }
 ]

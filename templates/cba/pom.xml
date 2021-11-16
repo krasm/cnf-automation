@@ -21,11 +21,11 @@
     <parent>
         <groupId>org.onap.ccsdk.cds.components.cba</groupId>
         <artifactId>test-blueprint-kotlin-parent</artifactId>
-        <version>1.1.4-SNAPSHOT</version>
+        <version>1.2.0</version>
     </parent>
 
-    <artifactId>free5gc</artifactId>
-    <version>1.1.4-SNAPSHOT</version>
+    <artifactId>apache</artifactId>
+    <version>1.2.0</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -45,13 +45,13 @@
         <dependency>
             <groupId>org.onap.ccsdk.cds.blueprintsprocessor.modules</groupId>
             <artifactId>processor-core</artifactId>
-            <version>1.1.4-SNAPSHOT</version>
+            <version>1.2.0</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.onap.ccsdk.cds.blueprintsprocessor.functions</groupId>
             <artifactId>k8s-connection-plugin</artifactId>
-            <version>1.1.4-SNAPSHOT</version>
+            <version>1.2.0</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

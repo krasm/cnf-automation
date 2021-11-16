@@ -4,7 +4,7 @@
         "template_author": "Lukasz Rajewski <lukasz.rajewski@orange.com>",
         "author-email": "lukasz.rajewski@orange.com",
         "user-groups": "ADMIN, OPERATION",
-        "template_name": "CNF",
+        "template_name": "APACHE",
         "template_version": "1.0.0",
         "template_tags": "Lukasz Rajewski, CNF",
         "template_type": "DEFAULT"
@@ -127,6 +127,18 @@
                             {
                                 "call_operation": "ResourceResolutionComponent.process"
                             }
+                        ],
+                        "on_success": [
+                            "config-template"
+                        ]
+                    },
+                    "config-template": {
+                        "description": "Generate and upload K8s config template",
+                        "target": "k8s-config-template",
+                        "activities": [
+                            {
+                                "call_operation": "K8sConfigTemplateComponent.process"
+                            }
                         ]
                     }
                 },
@@ -158,9 +170,6 @@
                         ],
                         "on_success": [
                             "status-verification-script"
-                        ],
-                        "on_failure": [
-                            "handle_error"
                         ]
                     },
                     "status-verification-script": {
@@ -172,15 +181,24 @@
                             }
                         ],
                         "on_success": [
-                            "collect-results"
-                        ],
-                        "on_failure": [
-                            "handle_error"
+                            "config-apply"
                         ]
                     },
-                    "handle_error": {
-                        "description": "Simple error verification script",
-                        "target": "simple-error-check",
+                    "config-apply": {
+                        "description": "Activate K8s config template",
+                        "target": "k8s-config-apply",
+                        "activities": [
+                            {
+                                "call_operation": "K8sConfigTemplateComponent.process"
+                            }
+                        ],
+                        "on_success": [
+                            "status-verification-script-after"
+                        ]
+                    },
+                    "status-verification-script-after": {
+                        "description": "Simple status verification script",
+                        "target": "simple-status-check",
                         "activities": [
                             {
                                 "call_operation": "ComponentScriptExecutor.process"
@@ -218,22 +236,10 @@
                             }
                         ],
                         "on_success": [
-                            "config-apply"
+                            "status-verification-script"
                         ],
                         "on_failure": [
                             "handle_error"
-                        ]
-                    },
-                    "config-apply": {
-                        "description": "Activate K8s config template",
-                        "target": "k8s-config-apply",
-                        "activities": [
-                            {
-                                "call_operation": "K8sConfigTemplateComponent.process"
-                            }
-                        ],
-                        "on_success": [
-                            "status-verification-script"
                         ]
                     },
                     "status-verification-script": {
@@ -356,6 +362,10 @@
                     "cnf-cds-base-profile": {
                         "type": "artifact-k8sprofile-content",
                         "file": "Templates/k8s-profiles/cnf-cds-base-profile.tar.gz"
+                    },
+                    "node-port-profile": {
+                        "type": "artifact-k8sprofile-content",
+                        "file": "Templates/k8s-profiles/node-port-profile.tar.gz"
                     }
                 }
             },
@@ -367,7 +377,7 @@
                             "process": {
                                 "inputs": {
                                     "artifact-prefix-names": [
-                                        "helm_vpkg"
+                                        "helm_apache"
                                     ],
                                     "resource-assignment-map": {
                                         "get_attribute": [
@@ -384,17 +394,9 @@
                     }
                 },
                 "artifacts": {
-                    "ssh-service-config": {
+                    "deployment-config": {
                         "type": "artifact-k8sconfig-content",
-                        "file": "Templates/k8s-configs/ssh-service.tar.gz"
-                    },
-                    "ssh-service-config-customizable": {
-                        "type": "artifact-k8sconfig-content",
-                        "file": "Templates/k8s-configs/ssh-service-config"
-                    },
-                    "ssh-service-config-customizable-mapping": {
-                        "type": "artifact-mapping-resource",
-                        "file": "Templates/k8s-configs/ssh-service-config/ssh-service-mapping.json"
+                        "file": "Templates/k8s-configs/deployment-config.tar.gz"
                     }
                 }
             },
@@ -406,7 +408,7 @@
                             "process": {
                                 "inputs": {
                                     "artifact-prefix-names": [
-                                        "helm_vpkg"
+                                        "helm_apache"
                                     ],
                                     "k8s-config-operation-type": "create",
                                     "resource-assignment-map": {
@@ -424,17 +426,17 @@
                     }
                 },
                 "artifacts": {
-                    "ssh-service-default": {
+                    "default-values": {
                         "type": "artifact-k8sconfig-content",
-                        "file": "Templates/k8s-configs/ssh-service-config/values.yaml"
+                        "file": "Templates/k8s-configs/deployment-values/default-values.yaml"
                     },
-                    "ssh-service-config": {
+                    "custom-values": {
                         "type": "artifact-k8sconfig-content",
-                        "file": "Templates/k8s-configs/ssh-service-values/values.yaml.vtl"
+                        "file": "Templates/k8s-configs/deployment-values/values.yaml.vtl"
                     },
-                    "ssh-service-config-mapping": {
+                    "custom-values-mapping": {
                         "type": "artifact-mapping-resource",
-                        "file": "Templates/k8s-configs/ssh-service-values/ssh-service-mapping.json"
+                        "file": "Templates/k8s-configs/deployment-values/values-mapping.json"
                     }
                 }
             },

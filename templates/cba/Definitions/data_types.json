@@ -53,7 +53,7 @@
             "description": "Dynamic DataType definition for workflow(resource-assignment).",
             "version": "1.0.0",
             "properties": {
-                "vpg-management-port": {
+                "replica-count": {
                     "description": "SSH external port of optional ssh service for vPKG.",
                     "type": "integer",
                     "default": 0

@@ -30,8 +30,8 @@ curl --location --request POST 'http://localhost:8081/api/v1/execution-service/p
         "subRequestId": "'$SUB_REQ_ID'"
     },
     "actionIdentifiers": {
-        "blueprintName": "vFW_CNF_CDS",
-        "blueprintVersion": "8.0.0",
+        "blueprintName": "APACHE",
+        "blueprintVersion": "1.0.0",
         "actionName": "resource-assignment",
         "mode": "sync"
     },
@@ -42,19 +42,14 @@ curl --location --request POST 'http://localhost:8081/api/v1/execution-service/p
             ],
             "resolution-key": "ra-test-resolution",
             "resource-assignment-properties": {
-                "vpg-management-port": 100,
+                "replica-count": 2,
                 "aic-cloud-region": "RegionOne",
                 "vnf-model-customization-uuid": "d73864db-1f6e-4e54-a533-a96773c926a4",
                 "service-instance-id": "2afee7c4-8b16-4f2f-a567-48fb7948abcf",
                 "vnf-id": "51274ece-55ca-4cbc-b7c4-0da0dcc65d38",
                 "vnf_name": "sample-vnf-name",
                 "k8s-rb-profile-namespace": "vfw-namespace",
-                "k8s-rb-profile-k8s-version": "1.18.9",
-                "int_private1_net_cidr" : "192.168.10.0/24",
-                "int_private2_net_cidr" : "192.168.20.0/24",
-                "onap_private_net_cidr" : "10.0.0.0/16",
-                "private1-prefix-id" : 2,
-                "private2-prefix-id" : 1
+                "k8s-rb-profile-k8s-version": "1.18.9"
             }
         }
     }
