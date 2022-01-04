@@ -285,8 +285,8 @@
                         "required": true,
                         "type": "string"
                     },
-                    "config-deploy-properties": {
-                        "description": "Dynamic PropertyDefinition for workflow(config-deploy).",
+                    "scale-out-properties": {
+                        "description": "Dynamic PropertyDefinition for workflow(scale-out).",
                         "required": true,
                         "type": "dt-config-deploy-properties"
                     }
@@ -352,8 +352,8 @@
                         "required": true,
                         "type": "string"
                     },
-                    "config-deploy-properties": {
-                        "description": "Dynamic PropertyDefinition for workflow(config-deploy).",
+                    "scale-in-properties": {
+                        "description": "Dynamic PropertyDefinition for workflow(scale-in).",
                         "required": true,
                         "type": "dt-config-deploy-properties"
                     }
@@ -428,8 +428,8 @@
                         "required": true,
                         "type": "string"
                     },
-                    "config-deploy-properties": {
-                        "description": "Dynamic PropertyDefinition for workflow(config-deploy).",
+                    "health-check-properties": {
+                        "description": "Dynamic PropertyDefinition for workflow(health-check).",
                         "required": true,
                         "type": "dt-config-deploy-properties"
                     }

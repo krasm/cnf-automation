@@ -42,9 +42,6 @@
                 },
                 "config-deploy-setup": {
                     "type": "json"
-                },
-                "registration-reconfiguration-parameters": {
-                    "type": "json"
                 }
             },
             "derived_from": "tosca.datatypes.Dynamic"
