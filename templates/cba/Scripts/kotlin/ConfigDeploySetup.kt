@@ -24,6 +24,7 @@ import org.onap.ccsdk.cds.blueprintsprocessor.functions.k8s.definition.template.
 import org.onap.ccsdk.cds.blueprintsprocessor.functions.resource.resolution.processor.ResourceAssignmentProcessor
 import org.onap.ccsdk.cds.blueprintsprocessor.functions.resource.resolution.utils.ResourceAssignmentUtils
 import org.onap.ccsdk.cds.controllerblueprints.core.BluePrintProcessorException
+import org.onap.ccsdk.cds.controllerblueprints.core.isNullOrMissing
 import org.onap.ccsdk.cds.controllerblueprints.resource.dict.ResourceAssignment
 import org.slf4j.LoggerFactory
 
@@ -37,10 +38,30 @@ open class ConfigDeploySetup() : ResourceAssignmentProcessor() {
 
     override suspend fun processNB(executionRequest: ResourceAssignment) {
 
-        var retValue: ObjectNode? = null
+        var retValue: Any? = null
 
         try {
-            if (executionRequest.name == "config-deploy-setup") {
+            if (executionRequest.name == "service-instance-id") {
+                var value = raRuntimeService.getInputValue(executionRequest.name)
+                if (!value.isNullOrMissing()) {
+                    retValue = value.asText()
+                } else {
+                    value = raRuntimeService.getInputValue("service-instance.service-instance-id")
+                    if (!value.isNullOrMissing()) {
+                        retValue = value.asText()
+                    }
+                }
+            } else if (executionRequest.name == "vnf-id") {
+                var value = raRuntimeService.getInputValue(executionRequest.name)
+                if (!value.isNullOrMissing()) {
+                    retValue = value.asText()
+                } else {
+                    value = raRuntimeService.getInputValue("generic-vnf.vnf-id")
+                    if (!value.isNullOrMissing()) {
+                        retValue = value.asText()
+                    }
+                }
+            } else if (executionRequest.name == "config-deploy-setup") {
                 val modulesSdnc = raRuntimeService.getResolutionStore("vf-modules-list-sdnc")["vf-modules"]
                 val modulesAai = raRuntimeService.getResolutionStore("vf-modules-list-aai")["vf-modules"]
                 val objectMapper = jacksonObjectMapper()

@@ -738,8 +738,8 @@
             "capability": {
                 "type": "source-capability",
                 "properties": {
-                    "script-type": "jython",
-                    "script-class-reference": "SampleRAProcessor",
+                    "script-type": "kotlin",
+                    "script-class-reference": "org.onap.ccsdk.cds.blueprintsprocessor.services.execution.scripts.ConfigDeploySetup",
                     "instance-dependencies": []
                 }
             },
@@ -1098,6 +1098,14 @@
             "default": {
                 "type": "source-default",
                 "properties": {}
+            },
+            "capability": {
+                "type": "source-capability",
+                "properties": {
+                    "script-type": "kotlin",
+                    "script-class-reference": "org.onap.ccsdk.cds.blueprintsprocessor.services.execution.scripts.ConfigDeploySetup",
+                    "instance-dependencies": []
+                }
             },
             "sdnc": {
                 "type": "source-rest",

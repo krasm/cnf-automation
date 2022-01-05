@@ -47,6 +47,16 @@
                     "description": "",
                     "required": false,
                     "type": "string"
+                },
+                "service-instance.service-instance-id": {
+                    "description": "",
+                    "required": false,
+                    "type": "string"
+                },
+                "generic-vnf.vnf-id": {
+                    "description": "",
+                    "required": false,
+                    "type": "string"
                 }
             },
             "derived_from": "tosca.datatypes.Dynamic"
@@ -64,6 +74,16 @@
                     "description": "",
                     "required": false,
                     "type": "string"
+                },
+                "service-instance.service-instance-id": {
+                    "description": "",
+                    "required": false,
+                    "type": "string"
+                },
+                "generic-vnf.vnf-id": {
+                    "description": "",
+                    "required": false,
+                    "type": "string"
                 }
             },
             "derived_from": "tosca.datatypes.Dynamic"
@@ -78,6 +98,16 @@
                     "type": "string"
                 },
                 "vnf-id": {
+                    "description": "",
+                    "required": false,
+                    "type": "string"
+                },
+                "service-instance.service-instance-id": {
+                    "description": "",
+                    "required": false,
+                    "type": "string"
+                },
+                "generic-vnf.vnf-id": {
                     "description": "",
                     "required": false,
                     "type": "string"

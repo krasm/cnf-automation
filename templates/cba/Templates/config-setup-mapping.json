@@ -15,7 +15,7 @@
         },
         "input-param": false,
         "dictionary-name": "service-instance-id",
-        "dictionary-source": "input",
+        "dictionary-source": "capability",
         "dependencies": [],
         "version": 0
     },
@@ -28,7 +28,7 @@
         },
         "input-param": false,
         "dictionary-name": "vnf-id",
-        "dictionary-source": "input",
+        "dictionary-source": "capability",
         "dependencies": [],
         "version": 0
     },
