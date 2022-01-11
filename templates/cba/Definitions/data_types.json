@@ -84,12 +84,17 @@
                     "description": "",
                     "required": false,
                     "type": "string"
+                },
+                "replica-count": {
+                    "description": "replica count for apache pods",
+                    "type": "integer",
+                    "default": 2
                 }
             },
             "derived_from": "tosca.datatypes.Dynamic"
         },
         "dt-scale-in-properties": {
-            "description": "Dynamic DataType definition for workflow(scale-out).",
+            "description": "Dynamic DataType definition for workflow(scale-in).",
             "version": "1.0.0",
             "properties": {
                 "service-instance-id": {
@@ -111,6 +116,43 @@
                     "description": "",
                     "required": false,
                     "type": "string"
+                },
+                "replica-count": {
+                    "description": "replica count for apache pods",
+                    "type": "integer",
+                    "default": 1
+                }
+            },
+            "derived_from": "tosca.datatypes.Dynamic"
+        },
+        "dt-scale-properties": {
+            "description": "Dynamic DataType definition for workflow(scale).",
+            "version": "1.0.0",
+            "properties": {
+                "service-instance-id": {
+                    "description": "",
+                    "required": false,
+                    "type": "string"
+                },
+                "vnf-id": {
+                    "description": "",
+                    "required": false,
+                    "type": "string"
+                },
+                "service-instance.service-instance-id": {
+                    "description": "",
+                    "required": false,
+                    "type": "string"
+                },
+                "generic-vnf.vnf-id": {
+                    "description": "",
+                    "required": false,
+                    "type": "string"
+                },
+                "replica-count": {
+                    "description": "replica count for apache pods",
+                    "type": "integer",
+                    "default": 1
                 }
             },
             "derived_from": "tosca.datatypes.Dynamic"
@@ -120,7 +162,7 @@
             "version": "1.0.0",
             "properties": {
                 "replica-count": {
-                    "description": "SSH external port of optional ssh service for vPKG.",
+                    "description": "replica count for apache pods",
                     "type": "integer",
                     "default": 0
                 },

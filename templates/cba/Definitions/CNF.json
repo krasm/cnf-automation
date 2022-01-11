@@ -292,6 +292,73 @@
                     }
                 }
             },
+            "scale": {
+                "steps": {
+                    "config-setup": {
+                        "description": "Gather necessary input for config init and status verification",
+                        "target": "config-setup-process",
+                        "activities": [
+                            {
+                                "call_operation": "ResourceResolutionComponent.process"
+                            }
+                        ],
+                        "on_success": [
+                            "config-template"
+                        ]
+                    },
+                    "config-template": {
+                        "description": "Generate and upload K8s config template",
+                        "target": "k8s-config-template",
+                        "activities": [
+                            {
+                                "call_operation": "K8sConfigTemplateComponent.process"
+                            }
+                        ],
+                        "on_success": [
+                            "config-update"
+                        ]
+                    },
+                    "config-update": {
+                        "description": "Activate K8s config restore",
+                        "target": "k8s-config-update",
+                        "activities": [
+                            {
+                                "call_operation": "K8sConfigValueComponent.process"
+                            }
+                        ],
+                        "on_success": [
+                            "status-verification-script-after"
+                        ]
+                    },
+                    "status-verification-script-after": {
+                        "description": "Simple status verification script",
+                        "target": "simple-status-check",
+                        "activities": [
+                            {
+                                "call_operation": "ComponentScriptExecutor.process"
+                            }
+                        ],
+                        "on_success": [
+                            "collect-results"
+                        ]
+                    },
+                    "collect-results": {
+                        "description": "Final collection of results",
+                        "target": "collect-results"
+                    }
+                },
+                "inputs": {
+                    "resolution-key": {
+                        "required": true,
+                        "type": "string"
+                    },
+                    "scale-properties": {
+                        "description": "Dynamic PropertyDefinition for workflow(scale).",
+                        "required": true,
+                        "type": "dt-scale-properties"
+                    }
+                }
+            },
             "scale-in": {
                 "steps": {
                     "config-setup": {
@@ -605,14 +672,39 @@
                     }
                 },
                 "artifacts": {
-                    "default-values": {
-                        "type": "artifact-k8sconfig-content",
-                        "file": "Templates/k8s-configs/deployment-values/default-values.yaml"
-                    },
                     "restore-values": {
                         "type": "artifact-k8sconfig-content",
                         "file": "Templates/k8s-configs/deployment-values/restore-values.yaml"
-                    },
+                    }
+                }
+            },
+            "k8s-config-update": {
+                "type": "component-k8s-config-value",
+                "interfaces": {
+                    "K8sConfigValueComponent": {
+                        "operations": {
+                            "process": {
+                                "inputs": {
+                                    "artifact-prefix-names": [
+                                        "helm_apache"
+                                    ],
+                                    "k8s-config-operation-type": "update",
+                                    "k8s-rb-config-value-source": "custom-values",
+                                    "resource-assignment-map": {
+                                        "get_attribute": [
+                                            "config-setup-process",
+                                            "",
+                                            "assignment-map",
+                                            "config-deploy",
+                                            "config-deploy-setup"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "artifacts": {
                     "custom-values": {
                         "type": "artifact-k8sconfig-content",
                         "file": "Templates/k8s-configs/deployment-values/values.yaml.vtl"
