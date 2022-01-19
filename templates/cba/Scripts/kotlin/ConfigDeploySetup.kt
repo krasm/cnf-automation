@@ -61,6 +61,19 @@ open class ConfigDeploySetup() : ResourceAssignmentProcessor() {
                         retValue = value.asText()
                     }
                 }
+            } else if (executionRequest.name == "replica-count") {
+                var value = raRuntimeService.getInputValue(executionRequest.name)
+                retValue = "1"
+                if (!value.isNullOrMissing()) {
+                    retValue = value.asText()
+                } else {
+                    value = raRuntimeService.getInputValue("data")
+                    if (!value.isNullOrMissing()) {
+                        if (value["replicaCount"] != null) {
+                            retValue = value["replicaCount"].asText()
+                        }
+                    }
+                }
             } else if (executionRequest.name == "config-deploy-setup") {
                 val modulesSdnc = raRuntimeService.getResolutionStore("vf-modules-list-sdnc")["vf-modules"]
                 val modulesAai = raRuntimeService.getResolutionStore("vf-modules-list-aai")["vf-modules"]

@@ -33,19 +33,6 @@
         "version": 0
     },
     {
-        "name": "replica-count",
-        "property": {
-            "description": "",
-            "required": false,
-            "type": "integer"
-        },
-        "input-param": false,
-        "dictionary-name": "replica-count",
-        "dictionary-source": "default",
-        "dependencies": [],
-        "version": 0
-    },
-    {
         "name": "vf-modules-list-sdnc",
         "property": {
             "description": "list of modules associated with vnf from MDSAL",
