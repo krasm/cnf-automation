@@ -17,6 +17,6 @@
 #
 # ============LICENSE_END=========================================================
 
-curl --location --request POST 'http://127.0.0.1:8081/api/v1/blueprint-model/publish' \
+curl --location --request POST 'http://127.0.0.1:8081/api/v1/blueprint-model' \
 --header 'Authorization: Basic Y2NzZGthcHBzOmNjc2RrYXBwcw==' \
 --form 'file=@cba.zip' | jq

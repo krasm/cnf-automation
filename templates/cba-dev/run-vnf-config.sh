@@ -40,11 +40,8 @@ curl --location --request POST 'http://localhost:8081/api/v1/execution-service/p
        "'config-$ACTION-request'": {
            "resolution-key": "VF_apache_k8s_demo_CNF",
            "'config-$ACTION-properties'": {
-               "service-instance-id": "889670f7-ed49-41b0-a251-b43e9a035811",
-               "service-model-uuid": "bea61c93-1a90-426b-9fbe-6024bde48419",
-               "vnf-id": "317f28f3-37b4-40c8-8062-e93fda15db99",
-               "vnf-name": "VF_vfw_k8s_demo_CNF_KUD",
-               "vnf-customization-uuid": "2793ba6f-332d-4694-8f8e-0b1f2ec3a732"
+               "service-instance-id": "2a2de3ec-35a4-4e1d-b313-ac5c4c8813a8",
+               "vnf-id": "6b6ff775-a170-4ce4-bcd0-85645d738390"
            }
         }
     }

@@ -1,5 +1,31 @@
 [
     {
+        "name": "vnf-id",
+        "property": {
+            "description": "",
+            "required": false,
+            "type": "string"
+        },
+        "input-param": false,
+        "dictionary-name": "vnf-id",
+        "dictionary-source": "capability",
+        "dependencies": [],
+        "version": 0
+    },
+    {
+        "name": "vnf-relationship-list",
+        "property": {
+            "description": "Details about VNF relationships from AAI",
+            "type": "json"
+        },
+        "input-param": false,
+        "dictionary-name": "vnf-relationship-list",
+        "dictionary-source": "aai-data",
+        "dependencies": [
+            "vnf-id"
+        ]
+    },
+    {
         "name": "service-instance-id",
         "property": {
             "description": "",
@@ -16,20 +42,9 @@
         "input-param": false,
         "dictionary-name": "service-instance-id",
         "dictionary-source": "capability",
-        "dependencies": [],
-        "version": 0
-    },
-    {
-        "name": "vnf-id",
-        "property": {
-            "description": "",
-            "required": false,
-            "type": "string"
-        },
-        "input-param": false,
-        "dictionary-name": "vnf-id",
-        "dictionary-source": "capability",
-        "dependencies": [],
+        "dependencies": [
+            "vnf-relationship-list"
+        ],
         "version": 0
     },
     {

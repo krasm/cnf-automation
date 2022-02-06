@@ -46,9 +46,17 @@ open class ConfigDeploySetup() : ResourceAssignmentProcessor() {
                 if (!value.isNullOrMissing()) {
                     retValue = value.asText()
                 } else {
-                    value = raRuntimeService.getInputValue("service-instance.service-instance-id")
-                    if (!value.isNullOrMissing()) {
-                        retValue = value.asText()
+                    val vnfRelationshipList = raRuntimeService.getResolutionStore("vnf-relationship-list")
+                    if (!vnfRelationshipList.isNullOrMissing()) {
+                        vnfRelationshipList["relationship-list"].forEach { relation ->
+                            if (relation["related-to"].asText() == "service-instance") {
+                                relation["relationship-data"].forEach { data ->
+                                    if (data["relationship-key"].asText() == "service-instance.service-instance-id") {
+                                        retValue = data["relationship-value"].asText()
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             } else if (executionRequest.name == "vnf-id") {
