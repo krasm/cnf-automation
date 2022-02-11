@@ -152,7 +152,12 @@
                 "replica-count": {
                     "description": "replica count for apache pods",
                     "type": "integer",
-                    "default": 1
+                    "required": false
+                },
+                "data": {
+                    "description": "the data content of the policy request parameters",
+                    "required": false,
+                    "type": "json"
                 }
             },
             "derived_from": "tosca.datatypes.Dynamic"

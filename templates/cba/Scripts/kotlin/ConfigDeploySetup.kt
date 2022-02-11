@@ -46,9 +46,17 @@ open class ConfigDeploySetup() : ResourceAssignmentProcessor() {
                 if (!value.isNullOrMissing()) {
                     retValue = value.asText()
                 } else {
-                    value = raRuntimeService.getInputValue("service-instance.service-instance-id")
-                    if (!value.isNullOrMissing()) {
-                        retValue = value.asText()
+                    val vnfRelationshipList = raRuntimeService.getResolutionStore("vnf-relationship-list")
+                    if (!vnfRelationshipList.isNullOrMissing()) {
+                        vnfRelationshipList["relationship-list"].forEach { relation ->
+                            if (relation["related-to"].asText() == "service-instance") {
+                                relation["relationship-data"].forEach { data ->
+                                    if (data["relationship-key"].asText() == "service-instance.service-instance-id") {
+                                        retValue = data["relationship-value"].asText()
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             } else if (executionRequest.name == "vnf-id") {
@@ -59,6 +67,19 @@ open class ConfigDeploySetup() : ResourceAssignmentProcessor() {
                     value = raRuntimeService.getInputValue("generic-vnf.vnf-id")
                     if (!value.isNullOrMissing()) {
                         retValue = value.asText()
+                    }
+                }
+            } else if (executionRequest.name == "replica-count") {
+                var value = raRuntimeService.getInputValue(executionRequest.name)
+                retValue = "1"
+                if (!value.isNullOrMissing()) {
+                    retValue = value.asText()
+                } else {
+                    value = raRuntimeService.getInputValue("data")
+                    if (!value.isNullOrMissing()) {
+                        if (value["replicaCount"] != null) {
+                            retValue = value["replicaCount"].asText()
+                        }
                     }
                 }
             } else if (executionRequest.name == "config-deploy-setup") {
